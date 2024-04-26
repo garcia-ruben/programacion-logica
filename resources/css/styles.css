@@ -1,0 +1,57 @@
+.degradado {
+    background-image: var(--color-fondo-degradado);
+}
+
+.icon-big {
+    font-size: 100px;
+}
+
+/* ANIMACIONES */
+
+.slide-up {
+    opacity: 0; /* Comienza con opacidad 0 para que esté oculto inicialmente */
+    animation: aparecer-desde-arriba 0.5s ease-in-out forwards; /* Aplica la animación */
+}
+
+@keyframes aparecer-desde-arriba {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fondo {
+    background-color: var(--color-secundario);
+}
+
+.fondo:hover {
+    background-color: var(--color-primario);
+    color: white;
+}
+
+menu {
+    font-family: 'Outfit', sans-serif;
+}
+
+menu:hover {
+    background-color: var(--color-primario);
+    color: white;
+}

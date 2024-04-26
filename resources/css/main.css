@@ -1,0 +1,53 @@
+@import url('styles.css');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --color-primario: #1e5128;
+    --color-secundario: #689c6e;
+    --color-fondo-degradado: linear-gradient(to bottom, #2d5f35, #689c6e);
+}
+
+body {
+    font-family: Arial, sans-serif;
+   	background:
+        url('../img/imagen-fondo.png') no-repeat right bottom 50px,
+        var(--color-fondo-degradado);
+    background-size: 34%;
+    height: 100vh;
+    width: 100%;
+    color: var(--color-primario);
+}
+
+h1 {
+    font-size: 24px;
+    font-family: 'Outfit', sans-serif;
+}
+
+input {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+footer {
+    background-color: var(--color-primario);
+    color: #fff;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+a {
+    color: #689c6e;
+    text-decoration: underline;
+    font-family: 'Outfit', sans-serif;
+}
+
+a:hover {
+    color: var(--color-primario);
+}
+
+a:visited {
+    color: #082032;
+}
