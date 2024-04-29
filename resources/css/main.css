@@ -5,6 +5,7 @@
     --color-primario: #1e5128;
     --color-secundario: #689c6e;
     --color-fondo-degradado: linear-gradient(to bottom, #2d5f35, #689c6e);
+    --tamano-contenido-principal: calc(100vh - 40px)
 }
 
 body {
@@ -42,6 +43,21 @@ a {
     color: #689c6e;
     text-decoration: underline;
     font-family: 'Outfit', sans-serif;
+}
+
+a.item-navbar {
+    color: white !important;
+    font-weight: lighter;
+}
+
+a.item-navbar:hover {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a.item-navbar.activo {
+    color: var(--color-primario) !important;
+    font-weight: bold;
 }
 
 a:hover {
