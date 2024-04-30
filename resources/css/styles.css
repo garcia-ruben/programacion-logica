@@ -24,6 +24,22 @@
     }
 }
 
+.slide-right {
+    opacity: 0; /* Comienza con opacidad 0 para que esté oculto inicialmente */
+    animation: aparecer-desde-derecha 0.5s ease-in-out forwards; /* Aplica la animación */
+}
+
+@keyframes aparecer-desde-derecha {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 #spinner-overlay {
     position: fixed;
     top: 0;
@@ -72,6 +88,7 @@ menu:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 .custom-navbar-toggler {
@@ -92,7 +109,37 @@ menu:hover {
     text-align: start !important;
 }
 
-.texto-peueño {
-    font-size: 14px;
+.texto-pequeno {
+    font-size: 17px;
     font-family: 'Outfit', sans-serif;
+}
+
+.texto-muy-pequeno {
+    font-size: 12px;
+    font-family: 'Outfit', sans-serif;
+}
+.elemento-menu{
+    display: flex;
+    align-content: center !important;
+}
+
+.custom-toast {
+    --bs-toast-max-width: auto;
+    --bs-toast-header-bg: #cb3234;
+    --bs-toast-header-color: white;
+    --bs-toast-body-bg: #cb3234;
+    --bs-toast-body-color: white;
+}
+
+/* CSS PARA PANTALLAS PEQUEÑAS (MEDIA QUERY) */
+@media screen and (max-width: 768px) {
+    .contenido-secundario {
+        height: 100%;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+    }
+
+    .contenido-principal {
+        height: 48rem;
+    }
 }

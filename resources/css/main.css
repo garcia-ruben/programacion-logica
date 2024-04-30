@@ -5,11 +5,13 @@
     --color-primario: #1e5128;
     --color-secundario: #689c6e;
     --color-fondo-degradado: linear-gradient(to bottom, #2d5f35, #689c6e);
-    --tamano-contenido-principal: calc(100vh - 40px)
+    --tamano-contenido-principal: calc(100vh - 40px);
+    --tamano-contenido-secundario: calc(var(--tamano-contenido-principal) - 200px);
+    --tamano-contenedor: calc(var(--tamano-contenido-secundario) - 100px)
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Outfit', sans-serif;
    	background:
         url('../img/imagen-fondo.png') no-repeat right bottom 50px,
         var(--color-fondo-degradado);
