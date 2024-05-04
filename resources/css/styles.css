@@ -1,12 +1,8 @@
+/* ANIMACIONES */
+
 .degradado {
     background-image: var(--color-fondo-degradado);
 }
-
-.icon-big {
-    font-size: 100px;
-}
-
-/* ANIMACIONES */
 
 .slide-up {
     opacity: 0; /* Comienza con opacidad 0 para que esté oculto inicialmente */
@@ -54,6 +50,7 @@
     align-items: center;
 }
 
+/* COLORES */
 .fondo {
     background-color: #B6F5A2;
 }
@@ -63,11 +60,29 @@
     color: white;
 }
 
-menu {
-    font-family: 'Outfit', sans-serif;
+menu:hover {
+    background-color: var(--color-primario);
+    color: white;
 }
 
-menu:hover {
+.boton {
+    background-color: var(--color-secundario);
+    color: white !important;
+}
+
+.boton.con-borde {
+    background-color: white;
+    color: var(--color-secundario) !important;
+    border: 2px solid var(--color-secundario);
+}
+
+.boton.con-borde:hover {
+    background-color: var(--color-secundario);
+    color: white !important;
+    border: 1px solid var(--color-secundario);
+}
+
+.boton:hover {
     background-color: var(--color-primario);
     color: white;
 }
@@ -91,16 +106,24 @@ menu:hover {
     overflow: hidden;
 }
 
-.custom-navbar-toggler {
-    border: none;
-    background-color: transparent;
-    color: inherit;
-    font-size: inherit;
-    padding: 0;
+.icon-big {
+    font-size: 100px;
 }
 
-.custom-navbar-toggler:focus {
-    outline: none;
+.cronometro {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 400%;
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    width: 200px;
+    margin: 0 auto;
+}
+
+/* TEXT */
+menu {
+    font-family: 'Outfit', sans-serif;
 }
 
 .texto-mediano {
@@ -118,9 +141,24 @@ menu:hover {
     font-size: 12px;
     font-family: 'Outfit', sans-serif;
 }
+
+
 .elemento-menu{
     display: flex;
     align-content: center !important;
+}
+
+/* BOOTSTRAP PERSONALIZADO */
+.custom-navbar-toggler {
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    font-size: inherit;
+    padding: 0;
+}
+
+.custom-navbar-toggler:focus {
+    outline: none;
 }
 
 .custom-toast {
@@ -131,15 +169,79 @@ menu:hover {
     --bs-toast-body-color: white;
 }
 
+.custom-toast.info {
+    --bs-toast-header-bg: #e5be01;
+    --bs-toast-header-color: white;
+    --bs-toast-body-bg: #e5be01;
+    --bs-toast-body-color: white;
+}
+
+.custom-table {
+    --bs-table-bg: rgba(128,166,123,0.7);
+    --bs-table-striped-bg: rgba(222, 242, 201, 0.9);
+    --bs-table-hover-bg: var(--color-primario);
+    --bs-table-hover-color: white;
+}
+
+.table.custom-table th,
+.table.custom-table td {
+    padding: 15px;
+}
+
+input.form-control {
+    height: 40px;
+}
+
+.input-group-text {
+    height: 40px;
+}
+
+.form-control {
+    color: var(--color-primario);
+}
+
+/* DATEPICKER PERSONALIZADO */
+.datepicker.datepicker-dropdown {
+    background-color: #668C54;
+    color: white;
+}
+
+.datepicker th.dow {
+    color: white;
+}
+
+.datepicker td.day:hover{
+    border-color: var(--color-primario);
+    color: white;
+}
+
+.datepicker td.day {
+    color: white;
+}
+
+.datepicker td.new.day,
+.datepicker td.old.day {
+    color: black;
+}
+.datepicker td.day:hover {
+    background-color: var(--color-primario) !important;
+}
+
+.datepicker td.active.day {
+    background-color: var(--color-primario) !important;
+    color: #fff !important;
+}
+
+
 /* CSS PARA PANTALLAS PEQUEÑAS (MEDIA QUERY) */
 @media screen and (max-width: 768px) {
     .contenido-secundario {
-        height: 100%;
+        height: 94%;
         margin-bottom: 1rem;
         margin-top: 1rem;
     }
 
     .contenido-principal {
-        height: 48rem;
+        height: 41.5rem;
     }
 }

@@ -1,206 +1,275 @@
+<script type="module" src="../resources/js/historial.js"></script>
 <title>Historial de consumo</title>
-<div class="col container-fluid contenido-principal slide-up">
-    <!-- Contenido principal -->
-    <div class="container-fluid d-flex flex-column col-12 bg-white rounded sombreado overflow-auto p-3" style="width: calc(100% - 60px);height: 90%">
-        <div class="col-12">
-            <div class="navbar navbar-expand-lg rounded text-white" style="background: var(--color-secundario); position: sticky;">
-                <div class="container-fluid">
-                            <span class="texto-mediano d-flex align-items-center" >Administración de Usuario
-                                <span class="navbar-toggler custom-navbar-toggler" data-bs-toggle="collapse" data-bs-target="#user-navbar" aria-controls="user-navbar" aria-expanded="false">
-                                    <span class="material-symbols-outlined" style="font-size: 2rem;">toc</span>
+<div class="container-fluid">
+    <div class="row">
+        <?php include 'breadcrums.php'?>
+        <div class="col container-fluid contenido-principal slide-up">
+            <!-- Contenido principal -->
+            <div class="container-fluid d-flex flex-column col-12 bg-white rounded sombreado overflow-auto p-3" style="width: calc(100% - 60px);height: 90%">
+                <div class="col-12">
+                    <div class="navbar navbar-expand-lg rounded text-white" style="background: var(--color-secundario); position: sticky;">
+                        <div class="container-fluid">
+                            <span class="texto-mediano d-flex align-items-center"><span>Historial</span>
+                                <span class="navbar-toggler custom-navbar-toggler" data-bs-toggle="collapse" data-bs-target="#history-navbar" aria-controls="history-navbar" aria-expanded="false" style="right: 0">
+                                    <span class="material-symbols-outlined ms-2" style="font-size: 2rem;">toc</span>
                                 </span>
                             </span>
-                    <div class="collapse navbar-collapse" id="user-navbar">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="nav-link item-navbar activo" id="datos-usuario" aria-current="page" href="#">Datos de Usuario</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link item-navbar"  id="agregar-usuario" href="#">Agregar usuario</a>
-                            </li>
-                        </ul>
+                            <div class="collapse navbar-collapse" id="history-navbar">
+                                <ul class="navbar-nav ms-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link item-navbar" id="history-consume" href="#">Histórico de Consumo</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link item-navbar activo"  id="history-graphics" href="#">Gráfico de consumo</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                <div id="liveToast" class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-header">
-                        <span class="material-symbols-outlined">error</span>
-                        <span class="ms-2 me-auto">¡Alerta!</span>
-                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    <div class="toast-container position-fixed bottom-0 mb-3 end-0 me-2 p-3">
+                        <div id="liveToast" class="toast custom-toast info" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header">
+                                <span class="material-symbols-outlined">info</span>
+                                <span class="ms-2 me-auto">¡Alerta!</span>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                            </div>
+                            <div class="toast-body text-dark">
+                                Se recomienda girar el dispositivo.
+                            </div>
+                        </div>
                     </div>
-                    <div class="toast-body text-dark">
-                        Se recomienda cambiar las credenciales.
-                    </div>
-                </div>
-            </div>
 
-            <div class="container-fluid mt-3 rounded contenido-secundario align-items-center">
-                <div id="datos-usuario-contenido" class="cjs-opcion container-fluid rounded bg-white slide-up mt-3 mb-3" style="display: none; height: 94%; width:  calc(100% - 10px)">
-                    <h1 class="mt-2">Cuenta de administrador.</h1>
-                    <div class="row">
-                        <div id="config" class="col-12 col-sm-12 p-3">
-                            <form id="form-config" class="d-flex flex-column form-control">
-                                <div class="d-flex flex-column align-items-center mt-3">
-                                    <div style="max-width: 100px;">
-                                        <img src="../resources/img/img-perfil.png" style="width: 100%; height: auto;">
-                                    </div>
-                                    <div>
-                                        <a class="texto-muy-pequeno fw-lighter" id="forgot-pass" href="#">Cambiar imagen de perfil</a>
-                                    </div>
+                    <div class="container-fluid mt-3 rounded contenido-secundario align-items-center">
+                        <div id="history-consume-content" class="cjs-opcion container-fluid rounded bg-white slide-up mt-3 mb-3" style="display: none; height: 96%; width:  calc(100% - 10px)">
+                            <h1 class="mt-2">Histórico de consumo.</h1>
+                            <div class="row">
+                                <div id="table" class="col-12 col-sm-12 overflow-auto">
+                                    <table class="table custom-table texto-pequeno table-striped table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-start" scope="col">Folio</th>
+                                            <th class="text-end" scope="col">Fecha</th>
+                                            <th class="text-center" scope="col">Producto</th>
+                                            <th class="text-center" scope="col">Opción</th>
+                                            <th class="text-end" scope="col">Precio</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                        <tr>
+                                            <td class="text-start">10</td>
+                                            <td class="text-end">2024-05-01</td>
+                                            <td class="text-center">Producto A</td>
+                                            <td class="text-center">Opción 1</td>
+                                            <td class="text-end">$10.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start">11</td>
+                                            <td class="text-end">2023-07-15</td>
+                                            <td class="text-center">Producto D</td>
+                                            <td class="text-center">Opción 2</td>
+                                            <td class="text-end">$42.50</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start">12</td>
+                                            <td class="text-end">2022-11-30</td>
+                                            <td class="text-center">Producto A</td>
+                                            <td class="text-center">Opción 1</td>
+                                            <td class="text-end">$88.20</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start">13</td>
+                                            <td class="text-end">2024-02-18</td>
+                                            <td class="text-center">Producto C</td>
+                                            <td class="text-center">Opción 2</td>
+                                            <td class="text-end">$21.90</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start">14</td>
+                                            <td class="text-end">2023-10-05</td>
+                                            <td class="text-center">Producto B</td>
+                                            <td class="text-center">Opción 1</td>
+                                            <td class="text-end">$65.70</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start">15</td>
+                                            <td class="text-end">2022-08-20</td>
+                                            <td class="text-center">Producto E</td>
+                                            <td class="text-center">Opción 2</td>
+                                            <td class="text-end">$30.80</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start">16</td>
+                                            <td class="text-end">2023-04-02</td>
+                                            <td class="text-center">Producto D</td>
+                                            <td class="text-center">Opción 1</td>
+                                            <td class="text-end">$17.40</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start">17</td>
+                                            <td class="text-end">2024-01-10</td>
+                                            <td class="text-center">Producto A</td>
+                                            <td class="text-center">Opción 2</td>
+                                            <td class="text-end">$52.60</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start">18</td>
+                                            <td class="text-end">2023-09-25</td>
+                                            <td class="text-center">Producto C</td>
+                                            <td class="text-center">Opción 1</td>
+                                            <td class="text-end">$75.30</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start">19</td>
+                                            <td class="text-end">2022-12-12</td>
+                                            <td class="text-center">Producto E</td>
+                                            <td class="text-center">Opción 1</td>
+                                            <td class="text-end">$80.10</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start">20</td>
+                                            <td class="text-end">2024-03-28</td>
+                                            <td class="text-center">Producto B</td>
+                                            <td class="text-center">Opción 2</td>
+                                            <td class="text-end">$44.90</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <label class="texto-mediano text-start" for="usuario">Nombre:</label>
-                                <div class="input-group input-group-sm d-flex align-items-center">
-                                    <input type="text" id="usuario-nombre" class="col texto-pequeno p-1 form-control">
-                                    <button class="input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">edit_square</span></button>
-                                </div>
-                                <label class="texto-mediano text-start" for="usuario">Usuario:</label>
-                                <input class="col form-control texto-pequeno p-1" id="usuario-username" disabled value="admin">
-                                <div class="text-start">
-                                    <a class="fw-lighter" id="forgot-pass" data-opcion="usuario" onclick="mostrar_opciones(this.dataset.opcion)">Cambiar nombre de usuaio</a>
-                                </div>
-                                <label class="texto-mediano text-start" for="contraseña">Contraseña:</label>
-                                <input class="col form-control texto-pequeno p-1" id="usuario-contraseña" type="password" disabled value="admin">
-                                <div class="text-start">
-                                    <a class="fw-lighter" id="forgot-pass" data-opcion="contraseña" onclick="mostrar_opciones(this.dataset.opcion)">Cambiar contraseña</a>
-                                </div>
-                                <label class="texto-mediano text-start" for="usuario">Correo electrónico:</label>
-                                <div class="input-group input-group-sm d-flex align-items-center">
-                                    <input type="email" id="usuario-correo" class="col texto-pequeno p-1 form-control">
-                                    <button class="input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">edit_square</span></button>
-                                </div>
-                            </form>
+                            </div>
                         </div>
-                        <div id="cambiar-pass" class="col-12 col-sm-6 slide-up" style="display: none;">
-                            <form id="form-update-pass" class="d-flex flex-column form-control">
-                                <label class="texto-mediano text-start" for="usuario">Contraseña actual:</label>
-                                <div class="input-group input-group-sm d-flex align-items-center mb-2 border-bottom">
-                                    <input type="password" id="pass-actual" class="col  p-1 form-control texto-mediano" value="admin">
-                                    <button class="cjs-view input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">visibility_off</span></button>
+                        <div id="history-graphics-content" class="cjs-opcion container bg-white rounded mt-3 mb-3 slide-up" style="display: none; width:  calc(100% - 10px); height: 95%">
+                            <div class="mt-2 row texto-pequeno">
+                                <h1 class="col">Gráficos de consumo.</h1>
+                                <nav class="col-sm-6 d-flex justify-content-end" aria-label="breadcrumb">
+                                    <span class="me-2">Gráfico de:</span>
+                                    <ol class="breadcrumb" id="graphics-selector">
+                                        <li class="breadcrumb-item" data-content="bar"><a class="activo" href="#">Barras</a></li>
+                                        <li class="breadcrumb-item" data-content="line"><a href="#">Lineal</a></li>
+                                        <li class="breadcrumb-item" data-content="pie"><a href="#">Pastel</a></li>
+                                    </ol>
+                                </nav>
+                            </div>
+
+                            <div class="container-fluid border-top">
+                                <div class="mt-2 d-flex align-items-center justify-content-end">
+                                    <span class="material-symbols-outlined" style="font-size: 23px; color: var(--color-primario)">filter_alt</span>
+                                    <a class="texto-pequeno" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-filter" aria-controls="offcanvas-filter" style="color: var(--color-primario)">
+                                        Filtros
+                                    </a>
+                                </div>
+                            </div>
+
+
+                            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas-filter" aria-labelledby="offcanvas-filter-label" style="height: 102.7%">
+                                <div class="offcanvas-header">
+                                    <h1 class="offcanvas-title" id="offcanvas-filter-label">Filtro de consumo por fechas</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                </div>
+                                <div class="offcanvas-body">
+                                    <div class="row align-items-end">
+                                        <div class="col-12">
+                                            <label for="start-date">Fecha inicial:</label>
+                                            <input type="text" class="form-control datepicker" id="start-date" placeholder="Selecciona una fecha">
+                                        </div>
+                                        <div class="col-12 mt-2">
+                                            <label for="end-date">Fecha final:</label>
+                                            <input type="text" class="form-control datepicker" id="end-date" placeholder="Selecciona una fecha">
+                                        </div>
+                                        <div class="col-auto justify-content-end mt-2">
+                                            <button type="button" class="btn boton btn-sm form-control text-end" id="send-filter">Guardar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div id="bar-graph-content" class="slide-up col-12 mb-3 d-flex align-items-center justify-content-center cjs-graphic" style="max-height: 500px;">
+                                    <canvas id="bar-graph"></canvas>
+                                </div>
+                                <div id="line-graph-content" class="slide-up d-none col-12 mb-3 d-flex align-items-center justify-content-center cjs-graphic" style="max-height: 500px;">
+                                    <canvas id="line-graph"></canvas>
                                 </div>
 
-                                <label class="texto-mediano text-start" for="usuario">Contraseña nueva:</label>
-                                <div class="input-group input-group-sm d-flex align-items-center">
-                                    <input type="password" id="pass-new" class="col texto-mediano p-1 form-control">
-                                    <button class="cjs-view input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">visibility_off</span></button>
+                                <div id="pie-graph-content" class="slide-right d-none col-12 mb-3 d-flex align-items-center justify-content-start cjs-graphic" style="max-height: 500px;">
+                                    <canvas id="pie-graph"></canvas>
                                 </div>
-                                <label class="texto-mediano text-start" for="usuario">Repita la contraseña:</label>
-                                <div class="input-group input-group-sm d-flex align-items-center">
-                                    <input type="password" id="pass-new-repeat" class="col texto-mediano p-1 form-control">
-                                    <button class="cjs-view input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">visibility_off</span></button>
-                                </div>
-                            </form>
-                            <div class="d-flex justify-content-start mt-3">
-                                <button class="btn btn-sm btn-success">Guardar</button>
-                            </div>
-                        </div>
+                                <script>
+                                    const ctxBar = document.getElementById('bar-graph');
+                                    new Chart(ctxBar, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                            datasets: [{
+                                                label: '# of Votes',
+                                                data: [12, 19, 3, 5, 2, 3],
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true
+                                                }
+                                            }
+                                        }
+                                    });
+                                    const ctxLine = document.getElementById('line-graph');
+                                    new Chart(ctxLine, {
+                                        type: 'line',
+                                        data: {
+                                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                            datasets: [{
+                                                label: '# of Votes',
+                                                data: [12, 19, 3, 5, 2, 3],
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true
+                                                }
+                                            }
+                                        }
+                                    });
 
-                        <div id="cambiar-user" class="col-12 col-sm-6 slide-up" style="display: none;">
-                            <form id="form-update-pass" class="d-flex flex-column form-control">
-                                <label class="texto-mediano text-start" for="user-actual">Nombre de usuario:</label>
-                                <input type="text" class="col form-control texto-pequeno p-1" id="usuario-username" disabled value="admin">
-                                <label class="texto-mediano text-start" for="user-new">Nuevo nombre de usuario:</label>
-                                <input type="text" id="user-new" class="col texto-mediano p-1 form-control">
-                            </form>
-                            <div class="d-flex justify-content-start mt-3">
-                                <button class="btn btn-outline-success btn-sm" disabled>Guardar</button>
-                                <button class="ms-2 btn btn-success btn-sm">Verificar disponibilidad</button>
+                                    const ctxPie = document.getElementById('pie-graph');
+                                    new Chart(ctxPie, {
+                                        type: 'doughnut',
+                                        data: {
+                                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                            datasets: [{
+                                                label: '# of Votes',
+                                                data: [12, 19, 3, 5, 2, 3],
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            plugins: {
+                                                legend: {
+                                                    position: 'right',
+                                                    align: 'start',
+                                                    labels: {
+                                                        boxWidth: 20,
+                                                        usePointStyle: false
+                                                    }
+                                                }
+                                            },
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true
+                                                }
+                                            }
+                                        }
+                                    });
+                                </script>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div id="agregar-usuario-contenido" class="cjs-opcion container bg-white rounded mt-3 mb-3 slide-up" style="display: none; width:  calc(100% - 10px); height: 95%">
-                    <h1 class="mt-2">Agrega un nuevo usuario.</h1>
-                    <div class="row">
-                        <div class="col-12 col-sm-7">
-                            <form id="form-config" class="d-flex flex-column form-control">
-                                <label class="texto-mediano text-start" for="usuario">Usuario:</label>
-                                <input class="col form-control texto-pequeno p-1" id="usuario-nuevo-username" placeholder="Ejemplo: admin">
-                                <label class="texto-mediano text-start" for="contraseña">Contraseña:</label>
-                                <input class="col form-control texto-pequeno p-1" id="usuario-nuevo-contraseña" type="password"  placeholder="Ejemplo: @123abc">
-                                <label class="texto-mediano text-start" for="contraseña">Permiso de usuario:</label>
-                                <select class="form-select texto-pequeno" id="usuario-nuevo-permiso" aria-label="Selecciona un permiso">
-                                    <option selected>Seleccionar una opción...</option>
-                                    <option value="1">Administrador</option>
-                                    <option value="2">Solo configura precios</option>
-                                    <option value="3">Solo consulta histórico</option>
-                                </select>
-                            </form>
-                            <div class="d-flex justify-content-start mt-3">
-                                <button class="btn btn-success btn-sm">Agregar usuario</button>
-                            </div>
-                        </div>
-                        <div class="col-md-5 mt-3 d-none d-lg-inline">
-                            <img class="img-fluid" src="../resources/img/personaje-edit.png" class="img-fluid ms-lg-5" alt="Personaje">
-                        </div>
-                    </div>
-                    <div id="informative-carousel" class="carousel slide mt-3" data-bs-ride="carousel">
-                        <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#informative-carousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
-                            <button type="button" data-bs-target="#informative-carousel" data-bs-slide-to="1" class=""></button>
-                            <button type="button" data-bs-target="#informative-carousel" data-bs-slide-to="2" class=""></button>
-                        </div>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <svg class="bd-placeholder-img rounded" width="100%" style="background-color: var(--color-primario); height: 100px"></svg>
-                                <div class="container mt-3">
-                                    <div class="carousel-caption text-start">
-                                        <h1>¡Usuario administrador!</h1>
-                                        <span class="opacity-75 texto-pequeno">Recuerda que usuario tendrá todos los permisos para crear, eliminar o modificar.</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <svg class="bd-placeholder-img rounded" width="100%" height="100%" style="background-color: var(--color-primario); max-height: 100px"></svg>
-                                <div class="container mt-3">
-                                    <div class="carousel-caption text-start">
-                                        <h1>Análisis de consumo.</h1>
-                                        <span class="opacity-75 texto-pequeno">En la pestaña <span class="text-white fw-bold ">Historial </span>podrás ver un resumen del consumo.</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <svg class="bd-placeholder-img rounded" width="100%" height="100%" style="background-color: var(--color-primario); max-height: 100px"></svg>
-                                <div class="container mt-3">
-                                    <div class="carousel-caption text-start">
-                                        <h1>Opciones de configuración.</h1>
-                                        <span class="opacity-75 texto-pequeno">No olvides que puedes cambiar los precios y tiempos de las opciones de manera remota.</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#informative-carousel" data-bs-slide="prev">
-                            <span class="material-symbols-outlined">arrow_back_ios</span>
-                            <span class="visually-hidden">Anterior</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#informative-carousel" data-bs-slide="next">
-                            <span class="material-symbols-outlined">arrow_forward_ios</span>
-                            <span class="visually-hidden">Siguiente</span>
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
-    <div>
-        <h4 class="text-center fw-medium">Historial de ventas.</h4>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th class="fw-light">Folio</th>
-                    <th class="fw-light">Fecha</th>
-                    <th class="fw-light">Producto</th>
-                    <th class="fw-light">Opcion</th>
-                    <th class="fw-light">Precio</th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-            </tbody>
-            <tfoot>
-            </tfoot>
-        </table>
     </div>
 </div>
