@@ -8,7 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/css/bootstrap-datepicker3.min.css">
     <!-- estilos css -->
-    <link rel="stylesheet" href="../resources/css/main.css">
+    <link rel="stylesheet" href="css/main.css">
     <!-- graficas --->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -18,7 +18,7 @@
         <div class="spinner-border" role="status" style="width: 5rem; height: 5rem;"></div>
     </div>
     <!-- mandar llamar las vistas en el index que verá el usuario -->
-    <?php include 'opciones.php'; ?>
+    <?php include resource_path('views/login.blade.php'); ?>
     <script type="text/javascript">
         function mostrar_spinner() {
             $('#mostrarSpinner').click(function(event) {

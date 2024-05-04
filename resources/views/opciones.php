@@ -141,9 +141,9 @@
                                 }
                             </script>
                         </div>
-                        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvas-time" aria-labelledby="offcanvas-time-label" style="height: 50%">
+                        <div class="offcanvas" tabindex="-1" id="offcanvas-time" aria-labelledby="offcanvas-time-label" style="height: 50%; width: 100%">
                             <div class="offcanvas-header">
-                                <h1 class="offcanvas-title" id="offcanvas-filter-label" style="color:var(--color-primario)">Selecciona el tiempo en el cronómetro</h1>
+                                <h1 class="offcanvas-title" id="offcanvas-filter-label" style="color:var(--color-primario)">Selecciona el tiempo en el cronómetro:</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
                             <div class="offcanvas-body d-flex align-items-center">
