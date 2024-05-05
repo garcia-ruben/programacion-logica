@@ -1,8 +1,8 @@
-<script type="module" src="../resources/js/historial.js"></script>
+<script type="module" src="{{ asset('static/js/historial.js') }}"></script>
 <title>Historial de consumo</title>
 <div class="container-fluid">
     <div class="row">
-        <?php include 'breadcrums.php'?>
+        @include('breadcrums')
         <div class="col container-fluid contenido-principal slide-up">
             <!-- Contenido principal -->
             <div class="container-fluid d-flex flex-column col-12 bg-white rounded sombreado overflow-auto p-3" style="width: calc(100% - 60px);height: 90%">

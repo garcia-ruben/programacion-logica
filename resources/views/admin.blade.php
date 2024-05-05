@@ -1,9 +1,9 @@
-<script type="module" src="../resources/js/admin.js"></script>
+<script type="module" src="{{ asset('static/js/admin.js') }}"></script>
 <title>@ - Administrador</title>
 <div class="container-fluid">
     <div class="row">
         <!-- Slidebar -->
-        <?php include 'breadcrums.php'?>
+        @include('breadcrums')
         <div class="col container-fluid contenido-principal slide-up">
             <!-- Contenido principal -->
             <div class="container-fluid d-flex flex-column col-12 bg-white rounded sombreado overflow-auto p-3" style="width: calc(100% - 60px);height: 90%">
@@ -49,7 +49,7 @@
                                     <form id="form-config" class="d-flex flex-column form-control">
                                         <div class="d-flex flex-column align-items-center mt-3">
                                             <div style="max-width: 100px;">
-                                                <img src="../resources/img/img-perfil.png" style="width: 100%; height: auto;">
+                                                <img src="{{ asset('static/img/img-perfil.png') }}" style="width: 100%; height: auto;">
                                             </div>
                                             <div>
                                                 <a class="texto-muy-pequeno fw-lighter" id="forgot-pass" href="#">Cambiar imagen de perfil</a>
@@ -102,7 +102,7 @@
                                 </div>
 
                                 <div id="change-user" class="col-12 col-sm-6 slide-up" style="display: none;">
-                                    <form id="form-update-pass" class="d-flex flex-column form-control">
+                                    <form id="form-update-username" class="d-flex flex-column form-control">
                                         <label class="texto-mediano text-start" for="user-actual">Nombre de usuario:</label>
                                         <input type="text" class="col form-control texto-pequeno p-1" id="username-user" disabled value="admin">
                                         <label class="texto-mediano text-start" for="user-new">Nuevo nombre de usuario:</label>
@@ -137,7 +137,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-5 mt-3 d-none d-lg-inline">
-                                    <img class="img-fluid" src="../resources/img/personaje-edit.png" class="img-fluid ms-lg-5" alt="Personaje">
+                                    <img class="img-fluid" src="{{ asset('static/img/personaje-edit.png') }}" class="img-fluid ms-lg-5" alt="Personaje">
                                 </div>
                             </div>
                             <div id="informative-carousel" class="carousel slide mt-3" data-bs-ride="carousel">

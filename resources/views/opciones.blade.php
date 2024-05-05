@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <div class="row">
         <!-- Slidebar -->
-        <?php include 'breadcrums.php'?>
+        @include('breadcrums')
         <div class="col container-fluid contenido-principal slide-up">
             <!-- Contenido principal -->
             <div class="container-fluid d-flex flex-column col-12 bg-white rounded sombreado overflow-auto p-3" style="width: calc(100% - 60px);height: 90%">

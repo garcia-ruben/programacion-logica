@@ -5,8 +5,8 @@
 }
 
 .slide-up {
-    opacity: 0; /* Comienza con opacidad 0 para que esté oculto inicialmente */
-    animation: aparecer-desde-arriba 0.5s ease-in-out forwards; /* Aplica la animación */
+    opacity: 0;
+    animation: aparecer-desde-arriba 0.5s ease-in-out forwards;
 }
 
 @keyframes aparecer-desde-arriba {
@@ -21,8 +21,8 @@
 }
 
 .slide-right {
-    opacity: 0; /* Comienza con opacidad 0 para que esté oculto inicialmente */
-    animation: aparecer-desde-derecha 0.5s ease-in-out forwards; /* Aplica la animación */
+    opacity: 0;
+    animation: aparecer-desde-derecha 0.5s ease-in-out forwards;
 }
 
 @keyframes aparecer-desde-derecha {
@@ -149,6 +149,21 @@ menu {
 }
 
 /* BOOTSTRAP PERSONALIZADO */
+
+@keyframes slide-bottom {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.offcanvas {
+    animation: slide-bottom 0.5s ease-in-out;
+}
+
+
 .custom-navbar-toggler {
     border: none;
     background-color: transparent;
