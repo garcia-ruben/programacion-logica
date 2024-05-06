@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ asset('static/css/main.css') }}">
     <!-- graficas --->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 </head>
 <body>
     <div id="spinner-overlay" style="display: none;">

@@ -21,7 +21,7 @@
                                         <a class="nav-link item-navbar" id="history-consume" href="#">Histórico de Consumo</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link item-navbar activo"  id="history-graphics" href="#">Gráfico de consumo</a>
+                                        <a class="nav-link item-navbar"  id="history-graphics" href="#">Gráfico de consumo</a>
                                     </li>
                                 </ul>
                             </div>

@@ -14,32 +14,26 @@
         <span class="fs-5 fw-semibold ms-1 d-none d-lg-inline">Panel de control</span>
     </div>
 
-    <ul class="rounded fondo border border-secondary list-unstyled">
-        <li class="mb-1">
-            <button class="fondo col-12 btn d-inline-flex border-0">
+    <ul class="container-fluid list-unstyled p-0">
+        <li class="fondo rounded mb-1">
+            <a class="col-12 btn btn-custom d-inline-flex border-0" href="/admin">
                 <span class="max-w material-symbols-outlined d-lg-inline">settings_account_box</span>
                 <span class="texto-pequeno ms-2 d-none d-lg-inline">Administrar usuario</span>
-            </button>
+            </a>
 
-            <button class="fondo text-start col-12 btn-toggle d-inline-flex align-items-center border-0 collapsed d-none d-lg-flex border-secondary border-top" id="options-toggle" data-bs-toggle="collapse" data-bs-target="#options-collapse" aria-expanded="false">
-                <span class="material-symbols-outlined">expand_more</span>
-                <span class="texto-pequeno">Configurar opciones</span>
-            </button>
-            <div class="collapse mb-2 " id="options-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="#" class="ms-5 link-body-emphasis d-inline-flex text-decoration-none">Cambiar Opciones</a></li>
-                    <li><a href="#" class="ms-5 link-body-emphasis d-inline-flex text-decoration-none">Cambiar Precio</a></li>
-                    <li><a href="#" class="ms-5 link-body-emphasis d-inline-flex text-decoration-none">Cambiar Tiempo/Producto</a></li>
-                </ul>
-            </div>
-            <button class="fondo text-start col-12 btn-toggle d-inline-flex align-items-center border-0 collapsed border-secondary border-top d-none d-lg-flex" id="history-toggle" data-bs-toggle="collapse" data-bs-target="#history-collapse" aria-expanded="false">
+            <a class="col-12 btn btn-custom d-inline-flex d-none d-lg-flex align-items-center btn-custom-bordered" href="/opciones">
+                <span class="material-symbols-outlined">settings_applications</span>
+                <span class="ms-2 texto-pequeno">Configurar opciones</span>
+            </a>
+
+            <button class="text-start btn-custom col-12 btn btn-toggle d-inline-flex align-items-center border-0 collapsed d-none d-lg-flex" id="history-toggle" data-bs-toggle="collapse" data-bs-target="#history-collapse" aria-expanded="false">
                 <span class="material-symbols-outlined">expand_more</span>
                 <span class="texto-pequeno">Historial</span>
             </button>
             <div class="collapse mb-2 " id="history-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="#" class="ms-5 link-body-emphasis d-inline-flex text-decoration-none">Histórico de consumo</a></li>
-                    <li><a href="#" class="ms-5 link-body-emphasis d-inline-flex text-decoration-none">Gráficas de consumo</a></li>
+                <ul class="btn-toggle-nav fw-normal pb-1 small">
+                    <li><a href="/historial/historico" class="link-body-emphasis d-inline-flex text-decoration-none">Histórico de consumo</a></li>
+                    <li><a href="/historial/grafico" class="link-body-emphasis d-inline-flex text-decoration-none">Gráficas de consumo</a></li>
                 </ul>
             </div>
         </li>

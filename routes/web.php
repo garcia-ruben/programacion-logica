@@ -7,7 +7,15 @@ Route::get('/login', function () {
     return view('login');
 });
 
-Route::get('/historial', function () {
+Route::get('/', function () {
+    return view('login');
+});
+
+Route::get('/historial/historico', function () {
+    return view('historial');
+});
+
+Route::get('/historial/grafico', function () {
     return view('historial');
 });
 

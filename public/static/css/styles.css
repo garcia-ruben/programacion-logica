@@ -55,7 +55,7 @@
     background-color: #B6F5A2;
 }
 
-.fondo:hover {
+.fondo>button:hover {
     background-color: #99d578;
     color: white;
 }
@@ -149,20 +149,14 @@ menu {
 }
 
 /* BOOTSTRAP PERSONALIZADO */
-
-@keyframes slide-bottom {
-    from {
-        transform: translateY(100%);
-    }
-    to {
-        transform: translateY(0);
-    }
+.btn-custom {
+    border-radius: 0;
 }
 
-.offcanvas {
-    animation: slide-bottom 0.5s ease-in-out;
+.btn-custom-bordered {
+    border-top: 1px solid var(--color-primario);
+    border-bottom: 1px solid var(--color-primario);
 }
-
 
 .custom-navbar-toggler {
     border: none;
