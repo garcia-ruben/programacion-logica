@@ -1,3 +1,4 @@
+@include('inicio')
 <script type="module" src="{{ asset('static/js/admin.js') }}"></script>
 <title>@ - Administrador</title>
 <div class="container-fluid">

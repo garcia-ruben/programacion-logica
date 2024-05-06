@@ -3,8 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
-Route::get('/', function () {
-    return view('inicio');
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('/historial', function () {
+    return view('historial');
+});
+
+Route::get('/opciones', function () {
+    return view('opciones');
 });
 
 Route::get('/admin', function () {

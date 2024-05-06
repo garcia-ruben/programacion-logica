@@ -1,3 +1,4 @@
+@include('inicio')
 <script type="module" src="{{ asset('static/js/historial.js') }}"></script>
 <title>Historial de consumo</title>
 <div class="container-fluid">

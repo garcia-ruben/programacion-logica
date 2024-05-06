@@ -1,3 +1,4 @@
+@include('inicio')
 <title>Inicio de sesión</title>
 <div class="container">
     <div class="row">

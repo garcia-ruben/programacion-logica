@@ -15,7 +15,7 @@ class Usuario extends Authenticatable
         return $this->contrasena;
     }
     protected $fillable = [
-        'nombre_usuariof',
+        'nombre_usuario',
         'contrasena',
         'correo',
         'contrasena_default',

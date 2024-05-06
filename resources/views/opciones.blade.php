@@ -1,3 +1,4 @@
+@include('inicio')
 <title>Configurador de opciones</title>
 <div class="container-fluid">
     <div class="row">

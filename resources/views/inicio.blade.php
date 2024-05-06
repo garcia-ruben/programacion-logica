@@ -18,7 +18,6 @@
         <div class="spinner-border" role="status" style="width: 5rem; height: 5rem;"></div>
     </div>
     <!-- mandar llamar las vistas en el index que verá el usuario -->
-    @include('historial')
     <script type="text/javascript">
         function mostrar_spinner() {
             $('#mostrarSpinner').click(function(event) {
