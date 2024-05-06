@@ -3,16 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
     use HasFactory;
+
+    public function getAuthPassword()
+    {
+        return $this->contrasena;
+    }
     protected $fillable = [
         'nombre_usuariof',
-        'contraseña',
+        'contrasena',
         'correo',
-        'contraseña_default',
+        'contrasena_default',
         'rol_id'
     ];
     public function rol()
