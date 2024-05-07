@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
-
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -44,7 +43,39 @@ class UsuarioController extends Controller
         $usuario = Usuario::find($id);
         if ($usuario) {
             $usuario->contrasena_plana = $nuevaContrasena;
-            $usuario->contrasena_default = NULL;
+            if ($nuevaContrasena == "admin") {
+                $usuario->contrasena_default = 12345;
+            } else {
+                $usuario->contrasena_default = NULL;
+            }
+            $usuario->contrasena =  Hash::make($nuevaContrasena); ;
+            $usuario->save();
+            return response()->json([
+                'exito' => true,
+                'id' => $usuario->id
+            ]);
+        } else {
+            return response()->json(['exito' => false]);
+        }
+    }
+
+    public function actualizarNombre(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer',
+            'nombre' => 'required|string|max:255'
+        ]);
+        $id = $request->id;
+        $nuevoNombre = $request->nombre;
+
+        $usuario = Usuario::find($id);
+        if ($usuario) {
+            $usuario->contrasena_plana = $nuevaContrasena;
+            if ($nuevaContrasena == "admin") {
+                $usuario->contrasena_default = 12345;
+            } else {
+                $usuario->contrasena_default = NULL;
+            }
             $usuario->contrasena =  Hash::make($nuevaContrasena); ;
             $usuario->save();
             return response()->json([

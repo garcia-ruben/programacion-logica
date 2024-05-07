@@ -40,10 +40,10 @@ class AuthController extends Controller
             return response()->json([
                 'nombre_usuario' => $usuario->nombre_usuario,
                 'contrasena' => $usuario->contrasena_plana,
-                'id' => $usuario->id
+                'id_usuario' => $usuario->id
             ]);
         } else {
-            return response()->json(['exito' => False], 401);
+            return response()->json(['exito' => False], 401); // fallo de autenticación
         }
     }
 }

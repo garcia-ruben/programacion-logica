@@ -18,6 +18,7 @@ class Usuario extends Authenticatable
         'nombre_usuario',
         'contrasena',
         'correo',
+        'nombre',
         'contrasena_default',
         'rol_id'
     ];

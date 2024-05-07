@@ -3,7 +3,6 @@ const mostrar = new Mostrar();
 var idUsuario;
 $(document).ready(function() {
     obtenerDatos();
-    idUsuario = $('#user-id').val();
     $('#edit-username').click(function() {
         $('#user-name').prop('disabled', function(i, v) {
             return !v;
@@ -97,9 +96,10 @@ function obtenerDatos() {
         url: '/ajax-usuario',
         type: 'GET',
         success: function (response) {
+            idUsuario = response.id_usuario;
             $('#user-username, #username-actual').val(response.nombre_usuario);
             $('#user-password, #pass-actual').val(response.contrasena);
-            $('#user-id').val(response.id);
+            $('#user-id').val(idUsuario);
         }
     });
 }
