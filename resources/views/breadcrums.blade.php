@@ -38,14 +38,39 @@
             </div>
         </li>
     </ul>
+
+    @if(session('isLoggedIn'))
+        <div class="mt-auto fondo rounded">
+            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn-custom btn d-flex align-items-center rounded" style="width: 100%">
+                <span class="material-symbols-outlined text-start">
+                    logout
+                </span>
+                    <span class="text-center flex-grow-1">Cerrar sesión</span>
+                </button>
+            </form>
+        </div>
+    @endif
     <script>
-        $('#options-toggle, #history-toggle').click(function () {
-           var icon = $(this).find('.material-symbols-outlined');
-           if (icon.text() === 'expand_more') {
-               icon.animate({ 'font-size': '1.2rem' }, 100).text('expand_less').animate({ 'font-size': '1.5rem' }, 100);
-           } else {
-               icon.animate({ 'font-size': '1.2rem' }, 100).text('expand_more').animate({ 'font-size': '1.5rem' }, 100);
-           }
-         });
+        $(document).ready(function (){
+            $('#options-toggle, #history-toggle').click(function () {
+                var icon = $(this).find('.material-symbols-outlined');
+                if (icon.text() === 'expand_more') {
+                    icon.animate({ 'font-size': '1.2rem' }, 100).text('expand_less').animate({ 'font-size': '1.5rem' }, 100);
+                } else {
+                    icon.animate({ 'font-size': '1.2rem' }, 100).text('expand_more').animate({ 'font-size': '1.5rem' }, 100);
+                }
+            });
+            // boton de cerrar sesión que elimina la funcion por defecto para enviar una solicitud get
+            // y ahora enviar una solicitud post
+            $('#logout-form').submit(function(event) {
+                event.preventDefault();
+                $.post($(this).attr('action'), $(this).serialize(), function() {
+                    window.location.href = '/';
+                });
+            });
+        });
     </script>
 </div>
+

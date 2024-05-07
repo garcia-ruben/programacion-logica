@@ -48,6 +48,7 @@
                             <div class="row">
                                 <div id="config" class="col-12 col-sm-12 p-3">
                                     <form id="form-config" class="d-flex flex-column form-control">
+                                        <input id="user-id" type="hidden" value="">
                                         <div class="d-flex flex-column align-items-center mt-3">
                                             <div style="max-width: 100px;">
                                                 <img src="{{ asset('static/img/img-perfil.png') }}" style="width: 100%; height: auto;">
@@ -58,23 +59,26 @@
                                         </div>
                                         <label class="texto-mediano text-start" for="usuario">Nombre:</label>
                                         <div class="input-group input-group-sm d-flex align-items-center">
-                                            <input type="text" id="user-name" class="col texto-pequeno p-1 form-control">
-                                            <button class="input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">edit_square</span></button>
+                                            <input type="text" id="user-name" class="col texto-pequeno p-1 form-control" disabled>
+                                            <button type="button" id="edit-username" class="input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">edit_square</span></button>
                                         </div>
                                         <label class="texto-mediano text-start" for="usuario">Usuario:</label>
-                                        <input class="col form-control texto-pequeno p-1" id="user-username" disabled value="admin">
+                                        <input class="col form-control texto-pequeno p-1" id="user-username" disabled>
                                         <div class="text-start">
-                                            <a class="fw-lighte cjs-change" data-opcion="usuario"">Cambiar nombre de usuaio</a>
+                                            <a class="fw-lighte cjs-change" data-opcion="usuario">Cambiar nombre de usuaio</a>
                                         </div>
                                         <label class="texto-mediano text-start" for="contraseña">Contraseña:</label>
-                                        <input class="col form-control texto-pequeno p-1" id="user-password" type="password" disabled value="admin">
+                                        <input class="col form-control texto-pequeno p-1" id="user-password" type="password" disabled>
                                         <div class="text-start">
                                             <a class="fw-lighter cjs-change" data-opcion="contraseña">Cambiar contraseña</a>
                                         </div>
                                         <label class="texto-mediano text-start" for="usuario">Correo electrónico:</label>
                                         <div class="input-group input-group-sm d-flex align-items-center">
-                                            <input type="email" id="user-email" class="col texto-pequeno p-1 form-control">
-                                            <button class="input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">edit_square</span></button>
+                                            <input type="email" id="user-email" class="col texto-pequeno p-1 form-control" disabled>
+                                            <button type="button" id="edit-email" class="input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">edit_square</span></button>
+                                        </div>
+                                        <div class="text-start mt-2" style="display: none" id="save-user">
+                                            <button type="submit" class="btn btn-md boton"  style="width: 100%">Guardar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -82,7 +86,7 @@
                                     <form id="form-update-pass" class="d-flex flex-column form-control">
                                         <label class="texto-mediano text-start" for="usuario">Contraseña actual:</label>
                                         <div class="input-group input-group-sm d-flex align-items-center mb-2 border-bottom">
-                                            <input type="password" id="pass-actual" class="col  p-1 form-control texto-mediano" value="admin">
+                                            <input type="password" id="pass-actual" class="col  p-1 form-control texto-mediano">
                                             <button class="cjs-view input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">visibility_off</span></button>
                                         </div>
 
@@ -98,20 +102,20 @@
                                         </div>
                                     </form>
                                     <div class="d-flex justify-content-start mt-3">
-                                        <button class="btn btn-sm boton">Guardar</button>
+                                        <button type="submit" id="save-password" class="btn btn-sm boton" disabled>Guardar</button>
                                     </div>
                                 </div>
 
                                 <div id="change-user" class="col-12 col-sm-6 slide-up" style="display: none;">
                                     <form id="form-update-username" class="d-flex flex-column form-control">
                                         <label class="texto-mediano text-start" for="user-actual">Nombre de usuario:</label>
-                                        <input type="text" class="col form-control texto-pequeno p-1" id="username-user" disabled value="admin">
+                                        <input type="text" class="col form-control texto-pequeno p-1" id="username-actual" disabled>
                                         <label class="texto-mediano text-start" for="user-new">Nuevo nombre de usuario:</label>
                                         <input type="text" id="new-user" class="col texto-mediano p-1 form-control">
                                     </form>
                                     <div class="d-flex justify-content-start mt-3">
-                                        <button class="btn boton con-borde btn-sm" disabled>Guardar</button>
-                                        <button class="ms-2 btn boton btn-sm">Verificar disponibilidad</button>
+                                        <button type="submit" id="save-username" class="btn boton con-borde btn-sm" disabled>Guardar</button>
+                                        <button type="submit" id="verify-username" class="ms-2 btn boton btn-sm" disabled>Verificar disponibilidad</button>
                                     </div>
                                 </div>
                             </div>

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Usuario;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -22,14 +21,29 @@ class AuthController extends Controller
         $usuario = Usuario::where('nombre_usuario', $nombre_usuario)->first();
         if ($usuario && password_verify($contrasena, $usuario->contrasena)) {
             Auth::login($usuario);
+            session(['isLoggedIn' => true]);
             return redirect()->intended('/admin');
         }
-        return redirect()->intended('/inicio');
+        return redirect()->intended('/');
     }
 
     public function logout()
     {
         Auth::logout();
         return redirect('/');
+    }
+
+    public function getUserData()
+    {
+        $usuario = Auth::user();
+        if ($usuario) {
+            return response()->json([
+                'nombre_usuario' => $usuario->nombre_usuario,
+                'contrasena' => $usuario->contrasena_plana,
+                'id' => $usuario->id
+            ]);
+        } else {
+            return response()->json(['exito' => False], 401);
+        }
     }
 }

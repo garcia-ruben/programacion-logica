@@ -17,7 +17,6 @@
     <div id="spinner-overlay" style="display: none;">
         <div class="spinner-border" role="status" style="width: 5rem; height: 5rem;"></div>
     </div>
-    <!-- mandar llamar las vistas en el index que verá el usuario -->
     <script type="text/javascript">
         function mostrar_spinner() {
             $('#mostrarSpinner').click(function(event) {
@@ -31,6 +30,11 @@
                 $('#spinner-overlay').hide();
             });
         }
+        $(window).on('beforeunload', function() {
+            $.post('/logout', function() {
+                window.location.href = '/';
+            });
+        });
     </script>
     <footer>
         <section class="container d-flex flex-column flex-md-row justify-content-between text-center">
