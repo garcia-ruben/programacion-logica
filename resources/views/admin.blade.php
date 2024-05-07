@@ -78,7 +78,7 @@
                                             <button type="button" id="edit-email" class="input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">edit_square</span></button>
                                         </div>
                                         <div class="text-start mt-2" style="display: none" id="save-user">
-                                            <button type="submit" class="btn btn-md boton"  style="width: 100%">Guardar</button>
+                                            <button type="button" class="btn btn-md boton"  id="save-email-name" style="width: 100%">Guardar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -100,10 +100,10 @@
                                             <input type="password" id="pass-new-repeat" class="col texto-mediano p-1 form-control">
                                             <button class="cjs-view input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">visibility_off</span></button>
                                         </div>
+                                        <div class="d-flex justify-content-start mt-3">
+                                            <button type="button" id="save-password" class="btn btn-sm boton" disabled>Guardar</button>
+                                        </div>
                                     </form>
-                                    <div class="d-flex justify-content-start mt-3">
-                                        <button type="submit" id="save-password" class="btn btn-sm boton" disabled>Guardar</button>
-                                    </div>
                                 </div>
 
                                 <div id="change-user" class="col-12 col-sm-6 slide-up" style="display: none;">
@@ -112,11 +112,11 @@
                                         <input type="text" class="col form-control texto-pequeno p-1" id="username-actual" disabled>
                                         <label class="texto-mediano text-start" for="user-new">Nuevo nombre de usuario:</label>
                                         <input type="text" id="new-user" class="col texto-mediano p-1 form-control">
+                                        <div class="d-flex justify-content-start mt-3">
+                                            <button type="button" id="save-username" class="btn boton con-borde btn-sm" disabled>Guardar</button>
+                                            <button type="button" id="verify-username" class="ms-2 btn boton btn-sm" disabled>Verificar disponibilidad</button>
+                                        </div>
                                     </form>
-                                    <div class="d-flex justify-content-start mt-3">
-                                        <button type="submit" id="save-username" class="btn boton con-borde btn-sm" disabled>Guardar</button>
-                                        <button type="submit" id="verify-username" class="ms-2 btn boton btn-sm" disabled>Verificar disponibilidad</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -125,10 +125,10 @@
                             <div class="row">
                                 <div class="col-12 col-sm-7">
                                     <form id="form-add" class="d-flex flex-column form-control">
-                                        <label class="texto-mediano text-start" for="usuario">Usuario:</label>
-                                        <input class="col form-control texto-pequeno p-1" id="new-user-username" placeholder="Ejemplo: admin">
-                                        <label class="texto-mediano text-start" for="contraseña">Contraseña:</label>
-                                        <input class="col form-control texto-pequeno p-1" id="new-user-password" type="password"  placeholder="Ejemplo: @123abc">
+                                        <label class="texto-mediano text-start" for="new-user-username">Usuario:</label>
+                                        <input class="col form-control texto-pequeno p-1" id="new-user-username" name="new-user-username" placeholder="Ejemplo: admin">
+                                        <label class="texto-mediano text-start" for="new-user-password">Contraseña:</label>
+                                        <input class="col form-control texto-pequeno p-1" id="new-user-password" name="new-user-password" type="password"  placeholder="Ejemplo: @123abc">
                                         <label class="texto-mediano text-start" for="contraseña">Permiso de usuario:</label>
                                         <select class="form-select texto-pequeno" id="new-user-permissions" aria-label="Selecciona un permiso">
                                             <option selected>Seleccionar una opción...</option>
@@ -138,7 +138,7 @@
                                         </select>
                                     </form>
                                     <div class="d-flex justify-content-start mt-3">
-                                        <button class="btn btn-success btn-sm">Agregar usuario</button>
+                                        <button type="button" id="save-add-user" class="btn btn-success btn-sm">Agregar usuario</button>
                                     </div>
                                 </div>
                                 <div class="col-md-5 mt-3 d-none d-lg-inline">

@@ -31,6 +31,8 @@ Route::get('/', function () {
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('/ajax-usuario', [AuthController::class, 'getUserData']);
-Route::get('/ajax-upd-nombre', [\App\Http\Controllers\UsuarioController::class, 'actualizarNombreUsuario']);
-Route::get('/ajax-upd-contrasena', [\App\Http\Controllers\UsuarioController::class, 'actualizarContraseña']);
+Route::get('/ajax_usuario', [AuthController::class, 'getUserData']);
+Route::post('/ajax_upd_nombre', [\App\Http\Controllers\UsuarioController::class, 'actualizarUsuario'])->name('actualizar-usuario');
+Route::post('/ajax_upd_contrasena', [\App\Http\Controllers\UsuarioController::class, 'actualizarContraseña'])->name('actualizar-contrasena');
+Route::post('/ajax_agregar_user', [\App\Http\Controllers\UsuarioController::class, 'agregarUsuario'])->name('agregar-usuario');
+

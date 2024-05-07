@@ -137,9 +137,16 @@
                                 </div>
                             </div>
                             <script type="text/javascript">
-                                if ($(window).width() < 576) {
-                                    $('.row .btn').addClass('btn-sm mb-2');
-                                }
+                                $(document).ready(function() {
+                                    if ($(window).width() < 576) {
+                                        $('.row .btn').addClass('btn-sm mb-2');
+                                    }
+
+                                    $('.cjs-view').on('click', function() {
+                                        var input = $(this).closest('.input-group').find('input');
+                                        input.prop('disabled', false);
+                                    });
+                                });
                             </script>
                         </div>
                         <div class="offcanvas" tabindex="-1" id="offcanvas-time" aria-labelledby="offcanvas-time-label" style="height: 50%; width: 100%">

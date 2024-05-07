@@ -2,7 +2,31 @@ import Mostrar from "./funciones_generales.js";
 const mostrar = new Mostrar();
 var idUsuario;
 $(document).ready(function() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': token
+        }
+    });
     obtenerDatos();
+    $('#save-email-name').click(function() {
+        var nombre = $('#user-name').val();
+        var correo = $('#user-email').val();
+        var datos = {
+            'nombre': nombre,
+            'correo': correo,
+            'id': idUsuario
+        }
+        actualizarUsuario(datos)
+    });
+
+    $('#save-add-user').click(function() {
+        var nombre = $('#new-user-username').val();
+        var contraseña = $('#new-user-password').val();
+        var rol = $('#new-user-permissions').val();
+        agregarUsuario(nombre, contraseña, rol)
+    });
+
     $('#edit-username').click(function() {
         $('#user-name').prop('disabled', function(i, v) {
             return !v;
@@ -26,9 +50,12 @@ $(document).ready(function() {
         var verificarActivado = !$('#verify-username').prop('disabled');
         if (verificarActivado) {
             $('#save-username').prop('disabled', false).click(function() {
-                var nombreUsuario = $('#new-user').val();
-                var idUsuario = $('#user-id').val();
-                actualizarNombre(idUsuario, nombreUsuario);
+                var nombre_usuario = $('#new-user').val();
+                var datos = {
+                    'id': idUsuario,
+                    'nombre_usuario': nombre_usuario
+                }
+                actualizarUsuario(datos)
             });
         }
     });
@@ -37,7 +64,7 @@ $(document).ready(function() {
     } else {
         $("#informative-carousel").show();
     }
-    var username = $('#username-user').val();
+    var username = $('#user-username').val();
     var password = $('#user-password').val();
     if (username === 'admin' || password === 'admin') {
         var toast = new bootstrap.Toast($('#liveToast')[0]);
@@ -93,7 +120,7 @@ function activarContrasena() {
 
 function obtenerDatos() {
     $.ajax({
-        url: '/ajax-usuario',
+        url: '/ajax_usuario',
         type: 'GET',
         success: function (response) {
             idUsuario = response.id_usuario;
@@ -104,14 +131,11 @@ function obtenerDatos() {
     });
 }
 
-function actualizarNombre(id, username){
+function actualizarUsuario(datos){
     $.ajax({
-        url: 'ajax-upd-nombre',
-        type: 'GET',
-        data: {
-            'id': id,
-            'nombre_usuario': username
-        },
+        url: 'ajax_upd_nombre',
+        type: 'POST',
+        data: datos,
         success: function (response) {
             var data = response;
             console.log('data', data);
@@ -121,8 +145,9 @@ function actualizarNombre(id, username){
 
 function actualizarContrasena(id, username){
     $.ajax({
-        url: 'ajax-upd-contrasena',
-        type: 'GET',
+        url: 'ajax_upd_contrasena',
+        type: 'POST',
+        dataType: 'json',
         data: {
             'id': id,
             'contrasena': username
@@ -130,6 +155,29 @@ function actualizarContrasena(id, username){
         success: function (response) {
             var data = response;
             console.log('data', data);
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    })
+}
+
+function agregarUsuario(nombre_usuario, contraseña, rol){
+    $.ajax({
+        url: 'ajax_agregar_user',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            'nombre_usuario': nombre_usuario,
+            'contrasena': contraseña,
+            'rol_id': rol
+        },
+        success: function (response) {
+            var data = response;
+            console.log('data', data);
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
         }
     })
 }

@@ -193,7 +193,7 @@
                                     <canvas id="line-graph"></canvas>
                                 </div>
 
-                                <div id="pie-graph-content" class="slide-right d-none col-12 mb-3 d-flex align-items-center justify-content-start cjs-graphic" style="max-height: 500px;">
+                                <div id="pie-graph-content" class="slide-right d-none col-12 mb-3 d-flex align-items-center justify-content-center cjs-graphic" style="max-height: 500px;">
                                     <canvas id="pie-graph"></canvas>
                                 </div>
                                 <script>
