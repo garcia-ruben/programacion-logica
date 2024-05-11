@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 
 
 class UsuarioController extends Controller

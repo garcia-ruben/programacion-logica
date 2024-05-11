@@ -68,7 +68,6 @@ class HistoryController
         } elseif ($endDate) {
             $query->whereDate('created_at', '<=', $endDate);
         }
-        dd($query->toSql());
         $historial = $query->get();
         return response()->json([
             'exito' => true,

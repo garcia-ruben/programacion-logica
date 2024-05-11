@@ -45,6 +45,7 @@ $(document).ready(function (){
 })
 
 function obtenerHistorial(){
+    mostrar.mostrarSpinner()
     $.ajax({
         url: '/ajax_historial',
         type: 'GET',
@@ -70,9 +71,8 @@ function obtenerHistorial(){
                     $("<td>").addClass('text-center').text('Opción ' + item.opcion_id).appendTo(row);
                     $("<td>").addClass('text-end').text('$' + item.precio_actual).appendTo(row);
                     row.appendTo(tbody);
+                    mostrar.ocultarSpinner()
                 });
-
-                $("#history-consume-content").show();
             } else {
                 console.error("La solicitud no fue exitosa.");
             }
@@ -84,6 +84,7 @@ function obtenerHistorial(){
 }
 
 function generarGraficas(productos) {
+    mostrar.mostrarSpinner()
     console.log(productos);
     var conteoProductos = {};
     productos.forEach(function (producto) {
@@ -188,6 +189,7 @@ function generarGraficas(productos) {
         }
     });
     $('#pie-graph').data('chart', pieChart);
+    mostrar.ocultarSpinner()
 }
 
 function limpiarGraficos(id) {
@@ -204,6 +206,7 @@ function filtrar() {
     var fechaInicial = $('#start-date').val();
     var fechaFinal = $('#end-date').val();
     console.log(fechaFinal, fechaInicial)
+    mostrar.mostrarSpinner()
     $.ajax({
         url: '/ajax_filtro',
         type: 'GET',
@@ -221,6 +224,7 @@ function filtrar() {
                 limpiarGraficos(chartId);
             });
             generarGraficas(data)
+            mostrar.ocultarSpinner()
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);

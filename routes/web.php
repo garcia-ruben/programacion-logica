@@ -37,4 +37,6 @@ Route::post('/ajax_upd_contrasena', [\App\Http\Controllers\UsuarioController::cl
 Route::post('/ajax_agregar_user', [\App\Http\Controllers\UsuarioController::class, 'agregarUsuario'])->name('agregar-usuario');
 Route::get('/ajax_historial', [\App\Http\Controllers\HistoryController::class, 'datosHistorial'])->name('obtener-datos-historial');
 Route::get('/ajax_filtro', [\App\Http\Controllers\HistoryController::class, 'filtarHistorico'])->name('filtrar-datos-historial');
+Route::get('/ajax_opciones', [\App\Http\Controllers\OpcionesController::class, 'obtenerDatosOpciones'])->name('datos-opciones');
+Route::post('/ajax_opcion_tiempo', [\App\Http\Controllers\OpcionesController::class, 'obtenerTiempo'])->name('tiempo-opcion');
 

@@ -1,9 +1,19 @@
 <div class="container-fluid d-lg-none p-2" style="background: #07311B">
     <div class="nav col-12 d-flex align-items-center justify-content-center">
         <span class="material-symbols-outlined"  style="color: #B6F5A2">water_drop</span>
-        <li><a href="#" class="px-2 texto-muy-pequeno text-white">Administrar usuario</a></li>
-        <li><a href="#" class="px-2 texto-muy-pequeno text-white">Configurar Opciones</a></li>
-        <li><a href="#" class="px-2 texto-muy-pequeno text-white">Historial</a></li>
+        <li><a href="/admin" class="px-2 texto-muy-pequeno text-white">Administrar usuario</a></li>
+        <li><a href="/opciones" class="px-2 texto-muy-pequeno text-white">Configurar Opciones</a></li>
+        <li><a href="/historial/historico" class="px-2 texto-muy-pequeno text-white">Historial</a></li>
+        @if(session('isLoggedIn'))
+            <li>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit"  class="btn d-flex align-items-center text-center" >
+                        <span class="material-symbols-outlined" style="color: #B6F5A2; font-size: 20px; text-decoration: underline">logout</span>
+                    </button>
+                </form>
+            </li>
+        @endif
     </div>
 </div>
 

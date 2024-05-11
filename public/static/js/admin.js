@@ -119,6 +119,7 @@ function activarContrasena() {
 }
 
 function obtenerDatos() {
+    mostrar.mostrarSpinner()
     $.ajax({
         url: '/ajax_usuario',
         type: 'GET',
@@ -127,11 +128,13 @@ function obtenerDatos() {
             $('#user-username, #username-actual').val(response.nombre_usuario);
             $('#user-password, #pass-actual').val(response.contrasena);
             $('#user-id').val(idUsuario);
+            mostrar.ocultarSpinner()
         }
     });
 }
 
 function actualizarUsuario(datos){
+    mostrar.mostrarSpinner()
     $.ajax({
         url: 'ajax_upd_nombre',
         type: 'POST',
@@ -139,11 +142,14 @@ function actualizarUsuario(datos){
         success: function (response) {
             var data = response;
             console.log('data', data);
+            mostrar.ocultarSpinner()
+
         }
     })
 }
 
 function actualizarContrasena(id, username){
+    mostrar.mostrarSpinner()
     $.ajax({
         url: 'ajax_upd_contrasena',
         type: 'POST',
@@ -155,6 +161,7 @@ function actualizarContrasena(id, username){
         success: function (response) {
             var data = response;
             console.log('data', data);
+            mostrar.ocultarSpinner()
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);
@@ -163,6 +170,7 @@ function actualizarContrasena(id, username){
 }
 
 function agregarUsuario(nombre_usuario, contraseña, rol){
+    mostrar.mostrarSpinner()
     $.ajax({
         url: 'ajax_agregar_user',
         type: 'POST',
@@ -175,6 +183,7 @@ function agregarUsuario(nombre_usuario, contraseña, rol){
         success: function (response) {
             var data = response;
             console.log('data', data);
+            mostrar.ocultarSpinner()
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);

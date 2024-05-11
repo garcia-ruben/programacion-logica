@@ -32,6 +32,14 @@ class Mostrar {
         }
         this.itemSeleccionadoAnterior = this.itemSeleccionadoActual;
     }
+
+    mostrarSpinner() {
+        $('#spinner-overlay').fadeIn();
+    }
+
+    ocultarSpinner() {
+        $('#spinner-overlay').fadeOut();
+    }
 }
 
 export default Mostrar;

@@ -15,28 +15,14 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 </head>
 <body>
-    <div id="spinner-overlay" style="display: none;">
-        <div class="spinner-border" role="status" style="width: 5rem; height: 5rem;"></div>
+    <div id="spinner-overlay" style="display: none">
+        <div class="custom-spinner" style="--spinner-size: 7rem;">
+            <?php for ($i = 0; $i < 12; $i++) { ?>
+            <div></div>
+            <?php } ?>
+        </div>
+        <span class="mt-2 loading-text">Cargando...</span>
     </div>
-    <script type="text/javascript">
-        function mostrar_spinner() {
-            $('#mostrarSpinner').click(function(event) {
-                event.preventDefault();
-                $('#spinner-overlay').fadeIn();
-                setTimeout(function() {
-                    $('#spinner-overlay').fadeOut();
-                }, 3000);
-            });
-            $(window).on('load', function() {
-                $('#spinner-overlay').hide();
-            });
-        }
-        $(window).on('beforeunload', function() {
-            $.post('/logout', function() {
-                window.location.href = '/';
-            });
-        });
-    </script>
     <footer>
         <section class="container d-flex flex-column flex-md-row justify-content-between text-center">
             <a class="text-white" href="https://villahermosa.tecnm.mx/">2024 © TecNM Campus Villahermosa ®.</a>
