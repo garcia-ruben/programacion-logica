@@ -228,6 +228,7 @@ function filtrar() {
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);
+            mostrar.ocultarSpinner()
         }
     });
 }

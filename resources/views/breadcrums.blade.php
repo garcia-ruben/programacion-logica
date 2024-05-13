@@ -6,7 +6,7 @@
         <li><a href="/historial/historico" class="px-2 texto-muy-pequeno text-white">Historial</a></li>
         @if(session('isLoggedIn'))
             <li>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                <form id="logout-form-sm" action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit"  class="btn d-flex align-items-center text-center" >
                         <span class="material-symbols-outlined" style="color: #B6F5A2; font-size: 20px; text-decoration: underline">logout</span>

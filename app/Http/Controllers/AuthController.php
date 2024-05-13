@@ -19,10 +19,21 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string|max:255',
+        ]);
         $nombre_usuario = $request->input('username');
         $contrasena = $request->input('password');
         $usuario = Usuario::where('nombre_usuario', $nombre_usuario)->first();
         if ($usuario && password_verify($contrasena, $usuario->contrasena)) {
+            Auth::login($usuario);
+            session(['isLoggedIn' => true]);
+            if ($usuario->correo) {
+                $this->enviarCorreo($usuario->correo);
+            }
+            return redirect()->intended('/admin');
+        } elseif ($usuario && $usuario->contrasena_default == (int)$contrasena) {
             Auth::login($usuario);
             session(['isLoggedIn' => true]);
             if ($usuario->correo) {
@@ -46,6 +57,8 @@ class AuthController extends Controller
             return response()->json([
                 'nombre_usuario' => $usuario->nombre_usuario,
                 'contrasena' => $usuario->contrasena_plana,
+                'nombre' => $usuario->nombre,
+                'correo' => $usuario->correo,
                 'id_usuario' => $usuario->id
             ]);
         } else {
@@ -67,5 +80,33 @@ class AuthController extends Controller
                 'mensaje' => 'Correo enviado exitosamente'
             ]);
         }
+    }
+
+    public  function retablecerContraseña(REQUEST $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $usuarios = Usuario::where('correo', $request->input('email'))->get();
+        if (!$usuarios->isEmpty()) {
+            Usuario::where('correo', $request->input('email'))
+                ->update([
+                    'contrasena' => 12345,
+                    'contrasena_plana' => null,
+                    'contrasena_default' => 12345,
+                    'nombre_usuario' => 'admin'
+                ]);
+            return response()->json([
+                'exito' => true,
+                'data' => $usuarios
+            ], 200);
+        } else {
+            return response()->json([
+                'exito' => false,
+                'data' => 'El correo no existe'
+            ], 200);
+        }
+
     }
 }

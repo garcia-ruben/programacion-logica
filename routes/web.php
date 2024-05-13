@@ -28,6 +28,10 @@ Route::get('/', function () {
     return view('login');
 });
 
+Route::get('/forgot-pass', function () {
+    return view('restablecer_contrasena');
+});
+
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -39,4 +43,4 @@ Route::get('/ajax_historial', [\App\Http\Controllers\HistoryController::class, '
 Route::get('/ajax_filtro', [\App\Http\Controllers\HistoryController::class, 'filtarHistorico'])->name('filtrar-datos-historial');
 Route::get('/ajax_opciones', [\App\Http\Controllers\OpcionesController::class, 'obtenerDatosOpciones'])->name('datos-opciones');
 Route::post('/ajax_opcion_tiempo', [\App\Http\Controllers\OpcionesController::class, 'obtenerTiempo'])->name('tiempo-opcion');
-
+Route::post('/ajax_restablecer_usuario', [AuthController::class, 'retablecerContraseña'])->name('reset-password');

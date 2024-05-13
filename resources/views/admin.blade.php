@@ -8,6 +8,19 @@
         <div class="col container-fluid contenido-principal slide-up">
             <!-- Contenido principal -->
             <div class="container-fluid d-flex flex-column col-12 bg-white rounded sombreado overflow-auto p-3" style="width: calc(100% - 60px);height: 90%">
+                <!-- alertas -->
+                <div class="col-sm-6" id="success" style="display: none">
+                    <div class="alert-message alert-message-success">
+                        <h4>¡Éxito!</h4>
+                        <p id="succes-content">
+                    </div>
+                </div>
+                <div class="col-sm-6" id="error" style="display: none">
+                    <div class="alert-message alert-message-danger">
+                        <h4>¡Error!</h4>
+                        <p id="error-content">
+                    </div>
+                </div>
                 <div class="col-12">
                     <div class="navbar navbar-expand-lg rounded text-white" style="background: var(--color-secundario); position: sticky;">
                         <div class="container-fluid">
@@ -57,11 +70,13 @@
                                                 <a class="texto-muy-pequeno fw-lighter" id="forgot-pass" href="#">Cambiar imagen de perfil</a>
                                             </div>
                                         </div>
-                                        <label class="texto-mediano text-start" for="usuario">Nombre:</label>
-                                        <div class="input-group input-group-sm d-flex align-items-center">
-                                            <input type="text" id="user-name" class="col texto-pequeno p-1 form-control" disabled>
-                                            <button type="button" id="edit-username" class="input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">edit_square</span></button>
+                                        <div class="d-flex align-items-center row">
+                                            <label class="texto-mediano text-start col-6" for="usuario">Nombre:
+                                                <span class="fw-bold ms-2 texto-mediano col-4 text-start" id="user-name"></span>
+                                            </label>
+                                            <span class="material-symbols-outlined col-6 text-end" type="button" id="edit-username" style="color: var(--color-primario)">edit_square</span>
                                         </div>
+                                        <input type="text" id="user-new-name" class="col texto-pequeno p-1 form-control" disabled style="display: none">
                                         <label class="texto-mediano text-start" for="usuario">Usuario:</label>
                                         <input class="col form-control texto-pequeno p-1" id="user-username" disabled>
                                         <div class="text-start">
@@ -72,11 +87,13 @@
                                         <div class="text-start">
                                             <a class="fw-lighter cjs-change" data-opcion="contraseña">Cambiar contraseña</a>
                                         </div>
-                                        <label class="texto-mediano text-start" for="usuario">Correo electrónico:</label>
-                                        <div class="input-group input-group-sm d-flex align-items-center">
-                                            <input type="email" id="user-email" class="col texto-pequeno p-1 form-control" disabled>
-                                            <button type="button" id="edit-email" class="input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">edit_square</span></button>
+                                        <div class="d-flex align-items-center row">
+                                            <label class="texto-mediano text-start col-6" for="usuario">Correo electrónico:
+                                                <span class="fw-bold ms-2 texto-mediano col-4 text-start" id="user-email"></span>
+                                            </label>
+                                            <span class="material-symbols-outlined col-6 text-end" type="button" id="edit-email" style="var(--color-primario)">edit_square</span>
                                         </div>
+                                        <input type="email" id="user-new-email" class="col texto-pequeno p-1 form-control" disabled style="display: none">
                                         <div class="text-start mt-2" style="display: none" id="save-user">
                                             <button type="button" class="btn btn-md boton"  id="save-email-name" style="width: 100%">Guardar</button>
                                         </div>
@@ -89,15 +106,24 @@
                                             <input type="password" id="pass-actual" class="col  p-1 form-control texto-mediano">
                                             <button class="cjs-view input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">visibility_off</span></button>
                                         </div>
-
-                                        <label class="texto-mediano text-start" for="usuario">Contraseña nueva:</label>
+                                        <div class="texto-muy-pequeno text-start mt-2">
+                                            <p>La contraseña debe cumplir con los siguientes requisitos:</p>
+                                            <ul>
+                                                <li>Al menos 8 caracteres de longitud.</li>
+                                                <li>Al menos una letra minúscula.</li>
+                                                <li>Al menos una letra mayúscula.</li>
+                                                <li>Al menos un dígito.</li>
+                                                <li>Al menos un carácter especial: @$!%*?&</li>
+                                            </ul>
+                                        </div>
+                                        <label class="texto-mediano text-start" for="pass-new">Contraseña nueva:</label>
                                         <div class="input-group input-group-sm d-flex align-items-center">
-                                            <input type="password" id="pass-new" class="col texto-mediano p-1 form-control">
+                                            <input type="password" id="pass-new" name="pass" class="col texto-mediano p-1 form-control">
                                             <button class="cjs-view input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">visibility_off</span></button>
                                         </div>
-                                        <label class="texto-mediano text-start" for="usuario">Repita la contraseña:</label>
+                                        <label class="texto-mediano text-start" for="pass-new-repeatas">Repita la contraseña:</label>
                                         <div class="input-group input-group-sm d-flex align-items-center">
-                                            <input type="password" id="pass-new-repeat" class="col texto-mediano p-1 form-control">
+                                            <input type="password" id="pass-new-repeat" name="pass_repeat" class="col texto-mediano p-1 form-control">
                                             <button class="cjs-view input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">visibility_off</span></button>
                                         </div>
                                         <div class="d-flex justify-content-start mt-3">

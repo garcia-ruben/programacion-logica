@@ -138,7 +138,7 @@ menu:hover {
 }
 
 .boton {
-    background-color: var(--color-secundario);
+    background-color: var(--color-primario);
     color: white !important;
 }
 
@@ -314,6 +314,52 @@ input.form-control {
     color: #fff !important;
 }
 
+.custom-header {
+    background: var(--color-primario);
+    color: white;
+}
+.custom-header-error {
+    background: #cb3234;
+    color: white;
+}
+
+.custom-footer {
+    background: var(--color-primario);
+    border-radius: 20px;
+}
+.custom-footer-error {
+    background:  #F2BE22;
+    border-radius: 20px;
+}
+
+.alert-message
+{
+    position: fixed;
+    top: 16px;
+    right: 0;
+    z-index: 1050;
+    margin: 20px 0;
+    padding: 15px;
+    border-left: 5px solid #eee;
+}
+
+.alert-message-success
+{
+    background-color: #F4FDF0;
+    border-color: #3C763D;
+}
+
+.alert-message-danger
+{
+    background-color: #fdf7f7;
+    border-color: #d9534f;
+    color: #cb3234;
+}
+
+.error-message {
+    color: #cb3234;
+    font-size: 12px;
+}
 
 /* CSS PARA PANTALLAS PEQUEÑAS (MEDIA QUERY) */
 @media screen and (max-width: 768px) {

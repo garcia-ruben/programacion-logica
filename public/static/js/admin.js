@@ -10,12 +10,14 @@ $(document).ready(function() {
     });
     obtenerDatos();
     $('#save-email-name').click(function() {
-        var nombre = $('#user-name').val();
-        var correo = $('#user-email').val();
-        var datos = {
-            'nombre': nombre,
-            'correo': correo,
-            'id': idUsuario
+        var nombre = $('#user-new-name').val();
+        var correo = $('#user-new-email').val();
+        let datos = {'id': idUsuario}
+        if (nombre) {
+            datos['nombre'] = nombre
+        }
+        if (correo) {
+            datos['correo'] = correo
         }
         actualizarUsuario(datos)
     });
@@ -28,14 +30,14 @@ $(document).ready(function() {
     });
 
     $('#edit-username').click(function() {
-        $('#user-name').prop('disabled', function(i, v) {
-            return !v;
-        });
+        $('#user-new-name').prop('disabled', function(i, v) {
+           return !v;
+        }).toggle();
     });
     $('#edit-email').click(function() {
-        $('#user-email').prop('disabled', function(i, v) {
+        $('#user-new-email').prop('disabled', function(i, v) {
             return !v;
-        });
+        }).toggle();
     });
     // activa botones de gaurdar en los forms
     $('#form-config input').on('change', function() {
@@ -43,6 +45,7 @@ $(document).ready(function() {
     });
 
     $('#form-update-pass input').on('change', function() {
+        initFormUpdatePass('form-update-pass');
         activarContrasena();
     });
     $('#form-update-username input').on('change', function() {
@@ -110,8 +113,9 @@ function mostrarOpciones(opcion) {
 
 function activarContrasena() {
     var contrasenaNueva = $('#pass-new').val();
-    var contrasenaNuevaDos = $('#pass-new-repeat').val();
-    if (contrasenaNueva == contrasenaNuevaDos){
+    let esValido = validar('form-update-pass')
+    console.log('115', esValido)
+    if (esValido) {
         $('#save-password').prop('disabled', false).click(function() {
             actualizarContrasena(idUsuario, contrasenaNueva);
         });
@@ -124,9 +128,12 @@ function obtenerDatos() {
         url: '/ajax_usuario',
         type: 'GET',
         success: function (response) {
+            console.log(response)
             idUsuario = response.id_usuario;
             $('#user-username, #username-actual').val(response.nombre_usuario);
             $('#user-password, #pass-actual').val(response.contrasena);
+            $('#user-name').text(response.nombre);
+            $('#user-email').text(response.correo);
             $('#user-id').val(idUsuario);
             mostrar.ocultarSpinner()
         }
@@ -140,10 +147,68 @@ function actualizarUsuario(datos){
         type: 'POST',
         data: datos,
         success: function (response) {
-            var data = response;
-            console.log('data', data);
-            mostrar.ocultarSpinner()
+            if (response.exito) {
+                var data = response;
+                var mensajeNombre = data['nombre']
+                var mensajeUsername = data['nombre_usuario']
+                var mensajeCorreo = data['correo']
+                var mensajesError = []
+                var mensajesSucces= []
+                console.log('data', data);
+                if (mensajeNombre == 'same value') {
+                    var messageErrorNombre = '<p>' + 'Error al actualziar Nombre.' + ' Es el nombre actual de tu cuenta' + '</p>';
+                    mensajesError.push(messageErrorNombre)
+                } else if (mensajeNombre.includes('success')) {
+                    var messageSuccessNombre = '<p>' + 'Has actualizado Nombre correctamente.' + '</p>';
+                    $('#user-name').text(datos.nombre)
+                    mensajesSucces.push(messageSuccessNombre)
+                }
+                if (mensajeUsername == 'same value') {
+                    var messageErrorUsername = '<p>' + 'Error al actualizar Nombre de Usuario.' + '</p>' + 'Es el nombre de usuario actual de tu cuenta' + '</p>';
+                    mensajesError.push(messageErrorUsername)
+                } else if (mensajeUsername.includes('en uso')) {
+                    var messageErrorUsername = '<p>' + 'Error al actualizar Nombre de Usuario.' + mensajeUsername + '</p>';
+                    mensajesError.push(messageErrorUsername)
+                } else if (mensajeUsername == 'success') {
+                    $('#user-username').val(datos.nombre_usuario)
+                    var messageSuccessUsername = '<p>' + 'Has actualizado Nombre de Usuario correctamente.' + '</p>';
+                    mensajesSucces.push(messageSuccessUsername)
+                }
+                if (mensajeCorreo == 'same value') {
+                    var messageErrorCorreo = '<p>' + 'Error al actualziar Correo.' + '</p><p>' + 'Es el correo actual de tu cuenta' + '</p>';
+                    mensajesError.push(messageErrorCorreo)
+                } else if (mensajeCorreo.includes('en uso')) {
+                    var messageErrorCorreo = '<p>' + 'Error al actualizar Correo.' + '</p>' + mensajeCorreo + '</p>';
+                    mensajesError.push(messageErrorCorreo)
+                } else if (mensajeCorreo == 'success') {
+                    $('#user-email').text(datos.correo)
+                    var messageSuccessCorreo = '<p>' + 'Has actualizado Correo correctamente.' + '</p>';
+                    mensajesSucces.push(messageSuccessCorreo)
+                }
 
+                if (mensajesError.length > 0) {
+                    console.log('187', mensajesError)
+                    $('#error-content').html(messageErrorNombre)
+                    mostrar.playSound()
+                    $('#error').fadeIn(1000, function(){
+                        setTimeout(function(){
+                            $('#error').fadeOut(1000);
+                        }, 5000);
+                    });
+                }
+
+                if (mensajesSucces.length > 0) {
+                    console.log('197', mensajesSucces)
+                    $('#succes-content').html(mensajesSucces)
+                    mostrar.playSound()
+                    $('#success').fadeIn(1000, function(){
+                        setTimeout(function(){
+                            $('#success').fadeOut(1000);
+                        }, 5000);
+                    });
+                }
+                mostrar.ocultarSpinner()
+            }
         }
     })
 }
@@ -159,12 +224,34 @@ function actualizarContrasena(id, username){
             'contrasena': username
         },
         success: function (response) {
-            var data = response;
-            console.log('data', data);
-            mostrar.ocultarSpinner()
+            if (response.exito) {
+                var data = response;
+                console.log('data', data);
+                mostrar.ocultarSpinner()
+                $('#succes-content').text('La contraseña ha sido actualizada correctamente')
+                $('#success').fadeIn(1000, function(){
+                    setTimeout(function(){
+                        $('#success').fadeOut(1000);
+                    }, 5000);
+                });
+            } else {
+                let message = '<p>' + 'Error al actualziar la contraseña' + '</p><p>' + response.error + '</p>';
+                $('#error-content').html(message)
+                    $('#error').fadeIn(1000, function(){
+                    setTimeout(function(){
+                        $('#error').fadeOut(1000);
+                    }, 5000);
+                });
+                mostrar.ocultarSpinner()
+            }
         },
         error: function(xhr, status, error) {
-            console.error(xhr.responseText);
+            let message = '<p>' + 'Error al actualziar la contraseña' + '</p><p>' + xhr.responseText + '</p>';
+            $('#error').html(message).fadeIn(1000, function(){
+                setTimeout(function(){
+                    $('#error').fadeOut(1000);
+                }, 5000);
+            });
         }
     })
 }
@@ -189,4 +276,44 @@ function agregarUsuario(nombre_usuario, contraseña, rol){
             console.error(xhr.responseText);
         }
     })
+}
+function validar(form) {
+    var esValido = $('#' + form).valid()
+    return esValido
+}
+function initFormUpdatePass(form) {
+    $.validator.addMethod("regex", function(value, element) {
+        return this.optional(element) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
+    }, "La contraseña debe contener al menos una letra minúscula, una letra mayúscula, un dígito y un carácter especial.");
+
+    $('#' + form).validate({
+        rules: {
+            pass: {
+                required: true,
+                minlength: 8,
+                regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+            },
+            pass_repeat: {
+                equalTo: "#pass-new"
+            }
+        },
+        messages: {
+            pass: {
+                required: "Por favor ingresa tu contraseña.",
+                minlength: "La contraseña debe tener al menos 8 caracteres.",
+            },
+            pass_repeat: {
+                equalTo: "Las contraseñas no coinciden."
+            }
+        },
+        errorPlacement: function(error, element) {
+            error.addClass('error-message');
+            var inputGroup = element.closest('.input-group');
+            if (inputGroup.length) {
+                error.insertAfter(inputGroup);
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
 }

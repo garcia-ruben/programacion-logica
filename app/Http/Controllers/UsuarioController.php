@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
@@ -23,21 +24,54 @@ class UsuarioController extends Controller
         $nuevoNombre = $request->nombre;
         $nuevoNombreUsuario = $request->nombre_usuario;
         $nuevoCorreo = $request->correo;
+        $mensajeCorreo = "";
+        $mensajeUsuario = "";
+        $mensajeNombre = "";
         $usuario = Usuario::find($id);
+        $usuarioExistente = Usuario::select('id')
+            ->where('nombre_usuario', $nuevoNombreUsuario)
+            ->orWhere('correo', $nuevoCorreo)
+            ->first();
         if ($usuario) {
             if ($request->has('nombre_usuario')) {
-                $usuario->nombre_usuario = $nuevoNombreUsuario;
+                if ($usuario->nombre_usuario != $nuevoNombreUsuario) {
+                    if ($usuarioExistente){
+                        $mensajeUsuario = "El nombre de usuario ya está en uso";
+                    } else {
+                        $usuario->nombre_usuario = $nuevoNombreUsuario;
+                        $mensajeUsuario = 'success';
+                    }
+                } else {
+                    $mensajeUsuario = "same value";
+                }
             }
             if ($request->has('nombre')) {
-                $usuario->nombre = $nuevoNombre;
+                if ($usuario->nombre != $nuevoNombre) {
+                    $usuario->nombre = $nuevoNombre;
+                    $mensajeNombre = 'success';
+                } else {
+                    $mensajeNombre = "same value";
+                }
             }
             if ($request->has('correo')) {
-                $usuario->correo = $nuevoCorreo;
+                if ($usuario->correo != $nuevoCorreo) {
+                    if ($usuarioExistente){
+                        $mensajeCorreo = "El correo electronico ya esta en uso";
+                    } else {
+                        $usuario->correo = $nuevoCorreo;
+                        $mensajeCorreo = 'success';
+                    }
+                } else {
+                    $mensajeCorreo = "same value";
+                }
             }
             $usuario->save();
+
             return response()->json([
                 'exito' => true,
-                'id' => $usuario->id
+                'nombre' => $mensajeNombre,
+                'correo' => $mensajeCorreo,
+                'nombre_usuario' => $mensajeUsuario,
             ]);
         } else {
             return response()->json(['exito' => false]);
@@ -46,21 +80,25 @@ class UsuarioController extends Controller
 
     public function actualizarContraseña(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
-            'contrasena' => 'required|string|max:255'
+            'contrasena' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'exito' => false,
+                'error' => $validator->errors()->all()
+            ], 200);
+        }
+
         $id = $request->id;
         $nuevaContrasena = $request->contrasena;
 
         $usuario = Usuario::find($id);
         if ($usuario) {
             $usuario->contrasena_plana = $nuevaContrasena;
-            if ($nuevaContrasena == "admin") {
-                $usuario->contrasena_default = 12345;
-            } else {
-                $usuario->contrasena_default = NULL;
-            }
+            $usuario->contrasena_default = Hash::make($nuevaContrasena);
             $usuario->contrasena =  Hash::make($nuevaContrasena); ;
             $usuario->save();
             return response()->json([

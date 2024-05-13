@@ -40,6 +40,10 @@ class Mostrar {
     ocultarSpinner() {
         $('#spinner-overlay').fadeOut();
     }
+    playSound() {
+        var audio = $("#notification")[0];
+        audio.play();
+    }
 }
 
 export default Mostrar;
