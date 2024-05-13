@@ -216,18 +216,35 @@ function filtrar() {
             'end_date': fechaFinal
         },
         success: function (response) {
-            var data = response;
-            console.log('data', data)
-            var graficas = ['bar', 'line', 'pie']
-            graficas.forEach(function(chartId) {
-                console.log(chartId)
-                limpiarGraficos(chartId);
-            });
-            generarGraficas(data)
-            mostrar.ocultarSpinner()
+            if (response.exito) {
+                var datos = response;
+                var data = datos.datos
+                console.log('data', datos, data)
+                var graficas = ['bar', 'line', 'pie']
+                graficas.forEach(function(chartId) {
+                    console.log(chartId)
+                    limpiarGraficos(chartId);
+                });
+                generarGraficas(data)
+                mostrar.ocultarSpinner()
+            } else {
+                console.log(response.mensaje)
+                if (response.mensaje['start_date']){
+                    $('#error-content').text(response.mensaje['start_date'][0])
+                } else if (response.mensaje['end_date']) {
+                    $('#error-content').text(response.mensaje['end_date'][0])
+                }
+                mostrar.playSound()
+                $('#error').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
+                setTimeout(function() {
+                    $('#error').animate({ opacity: 0 }, 1000, function() {
+                        $(this).hide();
+                    });
+                }, 5000);
+                mostrar.ocultarSpinner()
+            }
         },
         error: function(xhr, status, error) {
-            console.error(xhr.responseText);
             mostrar.ocultarSpinner()
         }
     });

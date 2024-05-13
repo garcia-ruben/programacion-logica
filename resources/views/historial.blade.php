@@ -7,6 +7,13 @@
         <div class="col container-fluid contenido-principal slide-up">
             <!-- Contenido principal -->
             <div class="container-fluid d-flex flex-column col-12 bg-white rounded sombreado overflow-auto p-3" style="width: calc(100% - 60px);height: 90%">
+                <!-- Alerta -->
+                <div class="col-sm-6" id="error" style="display: none">
+                    <div class="alert-message alert-message-danger">
+                        <h4>¡Error!</h4>
+                        <p id="error-content">
+                    </div>
+                </div>
                 <div class="col-12">
                     <div class="navbar navbar-expand-lg rounded text-white" style="background: var(--color-secundario); position: sticky;">
                         <div class="container-fluid">

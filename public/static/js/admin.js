@@ -156,7 +156,7 @@ function actualizarUsuario(datos){
                 var mensajesSucces= []
                 console.log('data', data);
                 if (mensajeNombre == 'same value') {
-                    var messageErrorNombre = '<p>' + 'Error al actualziar Nombre.' + ' Es el nombre actual de tu cuenta' + '</p>';
+                    var messageErrorNombre = '<p>' + 'Error al actualiZar Nombre.' + ' Es el nombre actual de tu cuenta' + '</p>';
                     mensajesError.push(messageErrorNombre)
                 } else if (mensajeNombre.includes('success')) {
                     var messageSuccessNombre = '<p>' + 'Has actualizado Nombre correctamente.' + '</p>';
@@ -190,22 +190,24 @@ function actualizarUsuario(datos){
                     console.log('187', mensajesError)
                     $('#error-content').html(messageErrorNombre)
                     mostrar.playSound()
-                    $('#error').fadeIn(1000, function(){
-                        setTimeout(function(){
-                            $('#error').fadeOut(1000);
-                        }, 5000);
-                    });
+                    $('#error').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
+                    setTimeout(function() {
+                        $('#error').animate({ opacity: 0 }, 1000, function() {
+                            $(this).hide();
+                        });
+                    }, 5000);
                 }
 
                 if (mensajesSucces.length > 0) {
                     console.log('197', mensajesSucces)
                     $('#succes-content').html(mensajesSucces)
                     mostrar.playSound()
-                    $('#success').fadeIn(1000, function(){
-                        setTimeout(function(){
-                            $('#success').fadeOut(1000);
-                        }, 5000);
-                    });
+                    $('#success').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
+                    setTimeout(function() {
+                        $('#success').animate({ opacity: 0 }, 1000, function() {
+                            $(this).hide();
+                        });
+                    }, 5000);
                 }
                 mostrar.ocultarSpinner()
             }

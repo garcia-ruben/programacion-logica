@@ -5,7 +5,7 @@
     <div class="row">
         <!-- Slidebar -->
         @include('breadcrums')
-        <div class="col container-fluid contenido-principal slide-up">
+        <div class="col container-fluid contenido-principal">
             <!-- Contenido principal -->
             <div class="container-fluid d-flex flex-column col-12 bg-white rounded sombreado overflow-auto p-3" style="width: calc(100% - 60px);height: 90%">
                 <!-- alertas -->
@@ -70,28 +70,40 @@
                                                 <a class="texto-muy-pequeno fw-lighter" id="forgot-pass" href="#">Cambiar imagen de perfil</a>
                                             </div>
                                         </div>
-                                        <div class="d-flex align-items-center row">
-                                            <label class="texto-mediano text-start col-6" for="usuario">Nombre:
-                                                <span class="fw-bold ms-2 texto-mediano col-4 text-start" id="user-name"></span>
-                                            </label>
-                                            <span class="material-symbols-outlined col-6 text-end" type="button" id="edit-username" style="color: var(--color-primario)">edit_square</span>
+
+                                        <div class="d-flex align-items-center row mt-2">
+                                            <label class="texto-mediano text-start" for="usuario">Nombre:</label>
+                                            <div class="row">
+                                                <div class="col 10">
+                                                    <span class="fw-bold texto-mediano col-auto col-sm-auto text-start" id="user-name"></span>
+                                                </div>
+                                                <div class="col-2 align-items-center d-flex justify-content-end">
+                                                    <span class="material-symbols-outlined" type="button" id="edit-username" style="color: var(--color-primario)">edit_square</span>
+                                                </div>
+                                            </div>
                                         </div>
                                         <input type="text" id="user-new-name" class="col texto-pequeno p-1 form-control" disabled style="display: none">
-                                        <label class="texto-mediano text-start" for="usuario">Usuario:</label>
+
+                                        <label class="texto-mediano text-start mt-2" for="usuario">Usuario:</label>
                                         <input class="col form-control texto-pequeno p-1" id="user-username" disabled>
                                         <div class="text-start">
                                             <a class="fw-lighte cjs-change" data-opcion="usuario">Cambiar nombre de usuaio</a>
                                         </div>
-                                        <label class="texto-mediano text-start" for="contraseña">Contraseña:</label>
+
+                                        <label class="texto-mediano text-start mt-2" for="contraseña">Contraseña:</label>
                                         <input class="col form-control texto-pequeno p-1" id="user-password" type="password" disabled>
                                         <div class="text-start">
                                             <a class="fw-lighter cjs-change" data-opcion="contraseña">Cambiar contraseña</a>
                                         </div>
-                                        <div class="d-flex align-items-center row">
-                                            <label class="texto-mediano text-start col-6" for="usuario">Correo electrónico:
-                                                <span class="fw-bold ms-2 texto-mediano col-4 text-start" id="user-email"></span>
-                                            </label>
-                                            <span class="material-symbols-outlined col-6 text-end" type="button" id="edit-email" style="var(--color-primario)">edit_square</span>
+
+                                        <div class="d-flex align-items-center row mt-2">
+                                            <label class="texto-mediano text-start col-auto" for="usuario">Correo electrónico:</label>
+                                            <div class="col-10">
+                                                <span class="fw-bold texto-mediano text-start col-auto" id="user-email" style="display: inline-block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+                                            </div>
+                                            <div class="col-2 align-items-center d-flex justify-content-end">
+                                                <span class="material-symbols-outlined" type="button" id="edit-email" style="var(--color-primario)">edit_square</span>
+                                            </div>
                                         </div>
                                         <input type="email" id="user-new-email" class="col texto-pequeno p-1 form-control" disabled style="display: none">
                                         <div class="text-start mt-2" style="display: none" id="save-user">
