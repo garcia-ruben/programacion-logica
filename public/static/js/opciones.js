@@ -14,41 +14,40 @@ $(document).ready(function () {
         mostrarTiempo(this)
     })
     mostrar.mostrarSpinner();
-   $.ajax({
-       url: '/ajax_opciones',
-      type: 'GET',
-       dataType: 'json',
-       success: function (response) {
-           var datos = response
-           var productos = datos.producto
-           var data = datos.data
-           console.log(data)
-           $.each(data, function(index, item) {
-               let productoEncontrado = productos.find(producto => producto.id === item.producto_id);
-               let idProducto = $('#save-option-' + (index + 1));
-               let dataIdForTime = $('#option-' + (index + 1) + '-time')
-               let selectProducto = $('#option-' + (index + 1) + '-name');
-               let precioProducto = $('#option-' + (index + 1) + '-price');
-               let tiempoProdcuto = $('#option-' + (index + 1) + '-time-value');
+    $.ajax({
+        url: '/ajax_opciones',
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            var datos = response
+            var productos = datos.producto
+             var data = datos.data
+            console.log(data)
+            $.each(data, function(index, item) {
+                let productoEncontrado = productos.find(producto => producto.id === item.producto_id);
+                let idProducto = $('#save-option-' + (index + 1));
+                let dataIdForTime = $('#option-' + (index + 1) + '-time')
+                let selectProducto = $('#option-' + (index + 1) + '-name');
+                let precioProducto = $('#option-' + (index + 1) + '-price');
+                let tiempoProdcuto = $('#option-' + (index + 1) + '-time-value');
 
-               $.each(productos, function(i, prod) {
+                $.each(productos, function(i, prod) {
                    $("<option>").val(prod.id).text(prod.producto).appendTo(selectProducto);
-               });
+                });
 
-               selectProducto.val(productoEncontrado.id);
-               precioProducto.val(item.precio);
-               tiempoProdcuto.val(item.tiempo);
-               dataIdForTime.data('id', item.id).click(function () {
+                selectProducto.val(productoEncontrado.id);
+                precioProducto.val(item.precio);
+                tiempoProdcuto.val(item.tiempo);
+                dataIdForTime.data('id', item.id).click(function () {
                    $('#modal-time-confirm').data('id', $(this).data('id'))
-               })
-               idProducto.data('id', item.id).click(function () {
-                   actualizarOpcion($(this).data('id'))
-               })
-           });
-
-           mostrar.ocultarSpinner()
-       }
-   });
+                })
+                idProducto.data('id', item.id).click(function () {
+                    actualizarOpcion($(this).data('id'))
+                })
+            });
+            mostrar.ocultarSpinner()
+        }
+    });
     $('#modal-time').on('hidden.bs.modal', function () {
         detenerCronometro();
         $('#chronometer').text('00:00');
@@ -70,7 +69,6 @@ $(document).ready(function () {
         $('.row').addClass('mb-2');
         $('.btn.con-borde').addClass('btn-sm mt-1 mb-1').css('width', '100%').text('Guardar cambios');
     }
-
     $('.cjs-view').on('click', function() {
         var input = $(this).closest('.input-group').find('select');
         input.prop('disabled', false);
@@ -137,6 +135,7 @@ function pausarCronometro() {
 }
 
 function detenerCronometro() {
+    console.log('138')
     if (running) {
         pausarCronometro();
         $('.cjs-stop span').text('restart_alt')
