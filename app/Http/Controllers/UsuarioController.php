@@ -115,21 +115,37 @@ class UsuarioController extends Controller
 
     public function agregarUsuario(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nombre_usuario' => 'required|string|max:255',
             'contrasena' => 'required|string|max:255',
             'rol_id' => 'required|integer'
         ]);
-        $usuario = new Usuario();
-        $usuario->nombre_usuario = $request->nombre_usuario;
-        $usuario->rol_id = $request->rol_id;
-        if ($request->contrasena == "admin") {
-            $usuario->contrasena_default = 12345;
-        } else {
-            $usuario->contrasena_default = NULL;
+        if ($validator->fails()) {
+            return response()->json([
+                'exito' => false,
+                'error' => $validator->errors()->all()
+            ], 200);
         }
-        $usuario->contrasena_plana = $request->contrasena;
-        $usuario->contrasena = Hash::make($request->contrasena);
+        $username = $request->get('nombre_usuario');
+        $usuarioExiste = Usuario::where('nombre_usuario', $username )
+            ->first();
+        if ($usuarioExiste) {
+            return response()->json([
+                'exito' => false,
+                'error' => 'El nombre de usuario ya esta en uso'
+            ]);
+        } else {
+            $usuario = new Usuario();
+            $usuario->nombre_usuario = $request->nombre_usuario;
+            $usuario->rol_id = $request->rol_id;
+            if ($request->contrasena == "admin") {
+                $usuario->contrasena_default = 12345;
+            } else {
+                $usuario->contrasena_default = NULL;
+            }
+            $usuario->contrasena_plana = $request->contrasena;
+            $usuario->contrasena = Hash::make($request->contrasena);
+        }
         try {
             $usuario->save();
             return response()->json([
@@ -169,24 +185,5 @@ class UsuarioController extends Controller
                 ]);
             }
         }
-    }
-
-    public function asdf(Request $request)
-    {
-        $usuario = Usuario::find($id);
-        if (!$usuario) {
-            return response()->json([
-                'exito' => false,
-                'error' => 'No se encontró ningún usuario'
-            ]);
-        }
-
-        $usuario->nombre_usuario = $username;
-        $usuario->save();
-
-        return response()->json([
-            'exito' => true,
-            'mensaje' => 'El nombre de usuario se actualizó correctamente'
-        ]);
     }
 }

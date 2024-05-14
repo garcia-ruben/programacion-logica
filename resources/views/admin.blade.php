@@ -82,7 +82,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <input type="text" id="user-new-name" class="col texto-pequeno p-1 form-control" disabled style="display: none">
+                                        <input type="text" id="user-new-name" class="col texto-pequeno p-1 form-control" style="display: none">
 
                                         <label class="texto-mediano text-start mt-2" for="usuario">Usuario:</label>
                                         <input class="col form-control texto-pequeno p-1" id="user-username" disabled>
@@ -105,7 +105,7 @@
                                                 <span class="material-symbols-outlined" type="button" id="edit-email" style="var(--color-primario)">edit_square</span>
                                             </div>
                                         </div>
-                                        <input type="email" id="user-new-email" class="col texto-pequeno p-1 form-control" disabled style="display: none">
+                                        <input type="email" id="user-new-email" class="col texto-pequeno p-1 form-control" style="display: none">
                                         <div class="text-start mt-2" style="display: none" id="save-user">
                                             <button type="button" class="btn btn-md boton"  id="save-email-name" style="width: 100%">Guardar</button>
                                         </div>
@@ -166,19 +166,16 @@
                                 <div class="col-12 col-sm-7">
                                     <form id="form-add" class="d-flex flex-column form-control">
                                         <label class="texto-mediano text-start" for="new-user-username">Usuario:</label>
-                                        <input class="col form-control texto-pequeno p-1" id="new-user-username" name="new-user-username" placeholder="Ejemplo: admin">
+                                        <input class="col form-control texto-pequeno p-1" id="new_user_username" name="new_user_username" placeholder="Ejemplo: admin">
                                         <label class="texto-mediano text-start" for="new-user-password">Contraseña:</label>
-                                        <input class="col form-control texto-pequeno p-1" id="new-user-password" name="new-user-password" type="password"  placeholder="Ejemplo: @123abc">
+                                        <input class="col form-control texto-pequeno p-1" id="new_user_password" name="new_user_password" type="password"  placeholder="Ejemplo: @123abc">
                                         <label class="texto-mediano text-start" for="contraseña">Permiso de usuario:</label>
-                                        <select class="form-select texto-pequeno" id="new-user-permissions" aria-label="Selecciona un permiso">
-                                            <option selected>Seleccionar una opción...</option>
-                                            <option value="1">Administrador</option>
-                                            <option value="2">Solo configura precios</option>
-                                            <option value="3">Solo consulta histórico</option>
+                                        <select class="form-select texto-pequeno" id="new_user_permissions" name="new_user_permissions" aria-label="Selecciona un permiso">
+                                            <option value="" selected>Seleccionar una opción...</option>
                                         </select>
                                     </form>
                                     <div class="d-flex justify-content-start mt-3">
-                                        <button type="button" id="save-add-user" class="btn btn-success btn-sm">Agregar usuario</button>
+                                        <button type="button" id="save-add-user" class="btn boton btn-sm">Agregar usuario</button>
                                     </div>
                                 </div>
                                 <div class="col-md-5 mt-3 d-none d-lg-inline">

@@ -20,7 +20,6 @@ class Mostrar {
         }
     }
 
-
     actualizarSeleccion(elemento) {
         $('.item-navbar').removeClass('activo');
         $(elemento).addClass('activo');
@@ -43,6 +42,30 @@ class Mostrar {
     playSound() {
         var audio = $("#notification")[0];
         audio.play();
+    }
+
+    alertError(message) {
+        $('#error-content').html(message)
+        $('#error').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
+        setTimeout(function() {
+            $('#error').animate({ opacity: 0 }, 1000, function() {
+                $(this).hide();
+            });
+        }, 5000);
+        this.ocultarSpinner()
+        this.playSound()
+    }
+
+    alertSuccess(message) {
+        $('#succes-content').html(message)
+        $('#success').css({opacity: 0, zIndex: 9999}).show().animate({opacity: 1}, 1000);
+        setTimeout(function () {
+            $('#success').animate({opacity: 0}, 1000, function () {
+                $(this).hide();
+            });
+        }, 5000);
+        this.ocultarSpinner()
+        this.playSound()
     }
 }
 

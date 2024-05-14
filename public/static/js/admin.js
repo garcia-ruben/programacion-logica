@@ -30,14 +30,10 @@ $(document).ready(function() {
     });
 
     $('#edit-username').click(function() {
-        $('#user-new-name').prop('disabled', function(i, v) {
-           return !v;
-        }).toggle();
+        $('#user-new-name').toggle();
     });
     $('#edit-email').click(function() {
-        $('#user-new-email').prop('disabled', function(i, v) {
-            return !v;
-        }).toggle();
+        $('#user-new-email').toggle();
     });
     // activa botones de gaurdar en los forms
     $('#form-config input').on('change', function() {
@@ -48,6 +44,11 @@ $(document).ready(function() {
         initFormUpdatePass('form-update-pass');
         activarContrasena();
     });
+
+    $('#form-add input').on('change', function() {
+        initAddForm()
+    });
+
     $('#form-update-username input').on('change', function() {
         $('#verify-username').show();
     });
@@ -156,7 +157,12 @@ function obtenerDatos() {
         url: '/ajax_usuario',
         type: 'GET',
         success: function (response) {
-            console.log(response)
+            response.roles.forEach(function(rol) {
+                $('#new-user-permissions').append($('<option>', {
+                    value: rol.id,
+                    text: rol.nombre
+                }));
+            });
             idUsuario = response.id_usuario;
             $('#user-username, #username-actual').val(response.nombre_usuario);
             $('#user-password, #pass-actual').val(response.contrasena);
@@ -184,7 +190,7 @@ function actualizarUsuario(datos){
                 var mensajesSucces= []
                 console.log('data', data);
                 if (mensajeNombre == 'same value') {
-                    var messageErrorNombre = '<p>' + 'Error al actualiZar Nombre.' + ' Es el nombre actual de tu cuenta' + '</p>';
+                    var messageErrorNombre = '<p>' + 'Error al actualizar Nombre.' + ' Es el nombre actual de tu cuenta' + '</p>';
                     mensajesError.push(messageErrorNombre)
                 } else if (mensajeNombre.includes('success')) {
                     var messageSuccessNombre = '<p>' + 'Has actualizado Nombre correctamente.' + '</p>';
@@ -192,10 +198,10 @@ function actualizarUsuario(datos){
                     mensajesSucces.push(messageSuccessNombre)
                 }
                 if (mensajeUsername == 'same value') {
-                    var messageErrorUsername = '<p>' + 'Error al actualizar Nombre de Usuario.' + '</p>' + 'Es el nombre de usuario actual de tu cuenta' + '</p>';
+                    var messageErrorUsername = '<p>' + 'Error al actualizar Nombre de Usuario.' + ' Es el nombre de usuario actual de tu cuenta' + '</p>';
                     mensajesError.push(messageErrorUsername)
                 } else if (mensajeUsername.includes('en uso')) {
-                    var messageErrorUsername = '<p>' + 'Error al actualizar Nombre de Usuario.' + mensajeUsername + '</p>';
+                    var messageErrorUsername = '<p>' + 'Error al actualizar Nombre de Usuario. ' + mensajeUsername + '</p>';
                     mensajesError.push(messageErrorUsername)
                 } else if (mensajeUsername == 'success') {
                     $('#user-username').val(datos.nombre_usuario)
@@ -203,10 +209,10 @@ function actualizarUsuario(datos){
                     mensajesSucces.push(messageSuccessUsername)
                 }
                 if (mensajeCorreo == 'same value') {
-                    var messageErrorCorreo = '<p>' + 'Error al actualziar Correo.' + '</p><p>' + 'Es el correo actual de tu cuenta' + '</p>';
+                    var messageErrorCorreo = '<p>' + 'Error al actualizar Correo.' + ' Es el correo actual de tu cuenta' + '</p>';
                     mensajesError.push(messageErrorCorreo)
                 } else if (mensajeCorreo.includes('en uso')) {
-                    var messageErrorCorreo = '<p>' + 'Error al actualizar Correo.' + '</p>' + mensajeCorreo + '</p>';
+                    var messageErrorCorreo = '<p>' + 'Error al actualizar Correo.' + mensajeCorreo + '</p>';
                     mensajesError.push(messageErrorCorreo)
                 } else if (mensajeCorreo == 'success') {
                     $('#user-email').text(datos.correo)
@@ -215,29 +221,18 @@ function actualizarUsuario(datos){
                 }
 
                 if (mensajesError.length > 0) {
-                    console.log('187', mensajesError)
-                    $('#error-content').html(messageErrorNombre)
-                    $('#error').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
-                    setTimeout(function() {
-                        $('#error').animate({ opacity: 0 }, 1000, function() {
-                            $(this).hide();
-                        });
-                    }, 5000);
+                    mostrar.alertError(mensajesError)
                 }
-
                 if (mensajesSucces.length > 0) {
-                    console.log('197', mensajesSucces)
-                    $('#succes-content').html(mensajesSucces)
-                    $('#success').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
-                    setTimeout(function() {
-                        $('#success').animate({ opacity: 0 }, 1000, function() {
-                            $(this).hide();
-                        });
-                    }, 5000);
+                    mostrar.alertSuccess(mensajesSucces)
                 }
                 mostrar.ocultarSpinner()
                 mostrar.playSound()
+                $('#user-new-email, #user-new-name').val("")
             }
+        },
+        error: function (xhr, status, error) {
+            mostrar.alertError(xhr.responseText)
         }
     })
 }
@@ -255,37 +250,15 @@ function actualizarContrasena(id, username){
         success: function (response) {
             if (response.exito) {
                 var data = response;
-                console.log('data', data);
-                $('#succes-content').text('La contraseña ha sido actualizada correctamente')
-                $('#success').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
-                setTimeout(function() {
-                    $('#error').animate({ opacity: 0 }, 1000, function() {
-                        $(this).hide();
-                    });
-                }, 5000);
+                mostrar.alertSuccess('La contraseña ha sido actualizada correctamente')
             } else {
-                let message = '<p>' + 'Error al actualziar la contraseña' + '</p><p>' + response.error + '</p>';
-                $('#error-content').html(message)
-                $('#error').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
-                setTimeout(function() {
-                    $('#error').animate({ opacity: 0 }, 1000, function() {
-                        $(this).hide();
-                    });
-                }, 5000);
+                let message = '<p>' + 'Error al actualziar la contraseña ' + response.error + '</p>';
+                mostrar.alertError(message)
             }
-            mostrar.ocultarSpinner()
-            mostrar.playSound()
         },
         error: function(xhr, status, error) {
-            let message = '<p>' + 'Error al actualziar la contraseña' + '</p><p>' + xhr.responseText + '</p>';
-            $('#error').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
-            setTimeout(function() {
-                $('#error').animate({ opacity: 0 }, 1000, function() {
-                    $(this).hide();
-                });
-            }, 5000);
-            mostrar.ocultarSpinner()
-            mostrar.playSound()
+            let message = '<p>' + 'Error al actualziar la contraseña ' + xhr.responseText + '</p>';
+            mostrar.alertError(message)
         }
     })
 }
@@ -314,29 +287,34 @@ function verificarDisponibilidadUsuario (username, callback) {
 }
 
 function agregarUsuario(nombre_usuario, contraseña, rol){
-    mostrar.mostrarSpinner()
-    $.ajax({
-        url: '/ajax_agregar_user',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            'nombre_usuario': nombre_usuario,
-            'contrasena': contraseña,
-            'rol_id': rol
-        },
-        success: function (response) {
-            var data = response;
-            console.log('data', data);
-            mostrar.ocultarSpinner()
-            mostrar.playSound()
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-            mostrar.ocultarSpinner()
-            mostrar.playSound()
-        }
-    })
+    let esValido = validar('form-add')
+    console.log('288', esValido)
+    if (esValido) {
+        mostrar.mostrarSpinner()
+        $.ajax({
+            url: '/ajax_agregar_user',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                'nombre_usuario': nombre_usuario,
+                'contrasena': contraseña,
+                'rol_id': rol
+            },
+            success: function (response) {
+                var data = response;
+                if (response.exito !== false) {
+                    mostrar.alertSuccess('¡Usuario agregado correctamente!')
+                } else {
+                    mostrar.alertError(response.error)
+                }
+            },
+            error: function(xhr, status, error) {
+                mostrar.alertError('Ha ocurrido un error inesperado')
+            }
+        })
+    }
 }
+
 function validar(form) {
     var esValido = $('#' + form).valid()
     return esValido
@@ -375,6 +353,37 @@ function initFormUpdatePass(form) {
             } else {
                 error.insertAfter(element);
             }
+        }
+    });
+}
+
+function initAddForm() {
+    $('#form-add').validate({
+        rules: {
+            new_user_username: {
+                required: true
+            },
+            new_user_permissions: {
+                required: true
+            },
+            new_user_password: {
+                required: true
+            }
+        },
+        messages: {
+            new_user_username: {
+                required: "Este campo es requerido"
+            },
+            new_user_permissions: {
+                required: "Este campo es requerido"
+            },
+            new_user_password: {
+                required: "Este campo es requerido"
+            }
+        },
+        errorPlacement: function(error, element) {
+            error.addClass('error-message');
+            error.insertAfter(element)
         }
     });
 }

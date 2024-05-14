@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\AlertLogin;
+use App\Models\Rol;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Usuario;
@@ -52,6 +53,8 @@ class AuthController extends Controller
 
     public function getUserData()
     {
+        $roles = Rol::select('id', 'nombre')
+            ->get();
         $usuario = Auth::user();
         if ($usuario) {
             return response()->json([
@@ -59,7 +62,8 @@ class AuthController extends Controller
                 'contrasena' => $usuario->contrasena_plana,
                 'nombre' => $usuario->nombre,
                 'correo' => $usuario->correo,
-                'id_usuario' => $usuario->id
+                'id_usuario' => $usuario->id,
+                'roles' => $roles
             ]);
         } else {
             return response()->json(['exito' => False], 401); // fallo de autenticación

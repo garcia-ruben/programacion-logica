@@ -141,6 +141,20 @@ menu:hover {
     background-color: var(--color-primario);
     color: white !important;
 }
+.boton.cjs-start:disabled {
+    background: var(--color-secundario) !important;
+}
+.boton.cjs-stop:disabled {
+    background: var(--color-secundario) !important;
+}
+
+.boton.cjs-pause:disabled {
+    background: var(--color-secundario) !important;
+}
+
+.boton.cjs-savetime:disabled {
+    background: var(--color-secundario) !important;
+}
 
 .boton.con-borde {
     background-color: white;
@@ -183,7 +197,7 @@ menu:hover {
 }
 
 .cronometro {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Rajdhani', sans-serif;
     font-size: 400%;
     background-color: #f0f0f0;
     border: 2px solid #ccc;
@@ -322,6 +336,10 @@ input.form-control {
     background: #cb3234;
     color: white;
 }
+.custom-header-alert {
+    background: #F2BE22;
+    color: white;
+}
 
 .custom-footer {
     background: var(--color-primario);
@@ -329,6 +347,10 @@ input.form-control {
 }
 .custom-footer-error {
     background:  #F2BE22;
+    border-radius: 20px;
+}
+
+.custom-footer-alert button {
     border-radius: 20px;
 }
 

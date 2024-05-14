@@ -28,7 +28,7 @@
     </div>
 </div>
 <!-- exito -->
-<div class="modal fade" id="redirect" tabindex="1" aria-labelledby="redirect" aria-hidden="true" data-bs-backdrop="static">
+<div class="modal fade modal-lg" id="redirect" tabindex="1" aria-labelledby="redirect" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header custom-header">
@@ -49,7 +49,7 @@
     </div>
 </div>
 <!-- error -->
-<div class="modal fade" id="error" tabindex="1" aria-labelledby="error" aria-hidden="true" data-bs-backdrop="static">
+<div class="modal fade modal-lg" id="error" tabindex="1" aria-labelledby="error" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header custom-header-error">
