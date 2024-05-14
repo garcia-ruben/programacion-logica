@@ -152,7 +152,9 @@
                                         <input type="text" id="new-user" class="col texto-mediano p-1 form-control">
                                         <div class="d-flex justify-content-start mt-3">
                                             <button type="button" id="save-username" class="btn boton con-borde btn-sm" disabled>Guardar</button>
-                                            <button type="button" id="verify-username" class="ms-2 btn boton btn-sm" disabled>Verificar disponibilidad</button>
+                                            <div class="text-start" style="display: none" id="verify-username">
+                                                <button type="button" class="ms-2 btn boton btn-sm"  id="verify-button-name">Verificar disponibilidad</button>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>

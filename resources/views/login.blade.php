@@ -19,7 +19,7 @@
                                     <a class="fw-lighter" id="forgot-pass" href="/forgot-pass">¿Has olvidado tu contraseña?</a>
                                 </div>
                   				<div class="text-center mt-4">
-                                    <button type="submit" class="btn boton" style="color: var(--color-primario); border-radius: 15px">Iniciar sesión</button>
+                                    <button type="submit" class="btn boton" style="color: var(--color-primario); border-radius: 15px; width: 100%">Iniciar sesión</button>
                   				</div>
                   			</form>
                   		</div>

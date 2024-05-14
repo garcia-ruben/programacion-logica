@@ -8,6 +8,7 @@ use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
+use function Laravel\Prompts\select;
 
 
 class UsuarioController extends Controller
@@ -29,13 +30,15 @@ class UsuarioController extends Controller
         $mensajeNombre = "";
         $usuario = Usuario::find($id);
         $usuarioExistente = Usuario::select('id')
-            ->where('nombre_usuario', $nuevoNombreUsuario)
+            ->where('nombre', $nuevoNombre)
             ->orWhere('correo', $nuevoCorreo)
             ->first();
         if ($usuario) {
             if ($request->has('nombre_usuario')) {
                 if ($usuario->nombre_usuario != $nuevoNombreUsuario) {
-                    if ($usuarioExistente){
+                    $nombreUsuarioEnUso = Usuario::where('nombre_usuario', $nuevoNombreUsuario )
+                        ->first();
+                    if ($nombreUsuarioEnUso) {
                         $mensajeUsuario = "El nombre de usuario ya está en uso";
                     } else {
                         $usuario->nombre_usuario = $nuevoNombreUsuario;
@@ -139,5 +142,51 @@ class UsuarioController extends Controller
                 'mensaje' => 'Error al agregar el cliente: ' . $e->getMessage()
             ]);
         }
+    }
+
+    public function verificarUsername(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|integer',
+            'username' => 'required|string|max:255',
+        ]);
+        $username = $request->get('username');
+        if ($validator->fails()) {
+            return response()->json([
+                'exito' => false,
+                'error' => $validator->errors()->all()
+            ], 200);
+        } else {
+            $usuarioExiste = Usuario::where('nombre_usuario', $username )
+                ->first();
+            if ($usuarioExiste) {
+                return response()->json([
+                    'exito' => false,
+                ]);
+            } else {
+                return response()->json([
+                    'exito' => true,
+                ]);
+            }
+        }
+    }
+
+    public function asdf(Request $request)
+    {
+        $usuario = Usuario::find($id);
+        if (!$usuario) {
+            return response()->json([
+                'exito' => false,
+                'error' => 'No se encontró ningún usuario'
+            ]);
+        }
+
+        $usuario->nombre_usuario = $username;
+        $usuario->save();
+
+        return response()->json([
+            'exito' => true,
+            'mensaje' => 'El nombre de usuario se actualizó correctamente'
+        ]);
     }
 }

@@ -49,19 +49,47 @@ $(document).ready(function() {
         activarContrasena();
     });
     $('#form-update-username input').on('change', function() {
-        $('#verify-username').attr('disabled', false);
-        var verificarActivado = !$('#verify-username').prop('disabled');
-        if (verificarActivado) {
-            $('#save-username').prop('disabled', false).click(function() {
-                var nombre_usuario = $('#new-user').val();
-                var datos = {
-                    'id': idUsuario,
-                    'nombre_usuario': nombre_usuario
-                }
-                actualizarUsuario(datos)
-            });
-        }
+        $('#verify-username').show();
     });
+    $('#verify-button-name').on('click',function () {
+        var username = $('#new-user').val()
+        verificarDisponibilidadUsuario(username, function(disponible) {
+            console.log('Username disponible:', disponible);
+            if (disponible) {
+                $('#save-username').prop('disabled', false)
+                $('#succes-content').html("Usuario disponible, puedes continuar")
+                $('#success').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
+                setTimeout(function() {
+                    $('#error').animate({ opacity: 0 }, 1000, function() {
+                        $(this).hide();
+                    });
+                }, 5000);
+                mostrar.playSound()
+            } else {
+                $('#save-username').prop('disabled', true)
+                $('#error-content').html("El nombre de usuario ya está en uso")
+                $('#error').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
+                setTimeout(function() {
+                    $('#error').animate({ opacity: 0 }, 1000, function() {
+                        $(this).hide();
+                    });
+                }, 5000);
+                mostrar.playSound()
+            }
+        });
+    })
+    $('#save-username').on('click', function() {
+        var nombre_usuario = $('#new-user').val();
+        var datos = {
+            'id': idUsuario,
+            'nombre_usuario': nombre_usuario
+        };
+        actualizarUsuario(datos);
+        $('#save-username').prop('disabled', true)
+        $('#verify-username').hide();
+        $('#new-user').val("");
+    });
+
     if ($(window).width() < 576) {
         $("#informative-carousel").hide();
     } else {
@@ -189,7 +217,6 @@ function actualizarUsuario(datos){
                 if (mensajesError.length > 0) {
                     console.log('187', mensajesError)
                     $('#error-content').html(messageErrorNombre)
-                    mostrar.playSound()
                     $('#error').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
                     setTimeout(function() {
                         $('#error').animate({ opacity: 0 }, 1000, function() {
@@ -201,7 +228,6 @@ function actualizarUsuario(datos){
                 if (mensajesSucces.length > 0) {
                     console.log('197', mensajesSucces)
                     $('#succes-content').html(mensajesSucces)
-                    mostrar.playSound()
                     $('#success').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
                     setTimeout(function() {
                         $('#success').animate({ opacity: 0 }, 1000, function() {
@@ -210,6 +236,7 @@ function actualizarUsuario(datos){
                     }, 5000);
                 }
                 mostrar.ocultarSpinner()
+                mostrar.playSound()
             }
         }
     })
@@ -229,31 +256,59 @@ function actualizarContrasena(id, username){
             if (response.exito) {
                 var data = response;
                 console.log('data', data);
-                mostrar.ocultarSpinner()
                 $('#succes-content').text('La contraseña ha sido actualizada correctamente')
-                $('#success').fadeIn(1000, function(){
-                    setTimeout(function(){
-                        $('#success').fadeOut(1000);
-                    }, 5000);
-                });
+                $('#success').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
+                setTimeout(function() {
+                    $('#error').animate({ opacity: 0 }, 1000, function() {
+                        $(this).hide();
+                    });
+                }, 5000);
             } else {
                 let message = '<p>' + 'Error al actualziar la contraseña' + '</p><p>' + response.error + '</p>';
                 $('#error-content').html(message)
-                    $('#error').fadeIn(1000, function(){
-                    setTimeout(function(){
-                        $('#error').fadeOut(1000);
-                    }, 5000);
-                });
-                mostrar.ocultarSpinner()
+                $('#error').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
+                setTimeout(function() {
+                    $('#error').animate({ opacity: 0 }, 1000, function() {
+                        $(this).hide();
+                    });
+                }, 5000);
             }
+            mostrar.ocultarSpinner()
+            mostrar.playSound()
         },
         error: function(xhr, status, error) {
             let message = '<p>' + 'Error al actualziar la contraseña' + '</p><p>' + xhr.responseText + '</p>';
-            $('#error').html(message).fadeIn(1000, function(){
-                setTimeout(function(){
-                    $('#error').fadeOut(1000);
-                }, 5000);
-            });
+            $('#error').css({opacity: 0, zIndex: 9999}).show().animate({ opacity: 1 }, 1000);
+            setTimeout(function() {
+                $('#error').animate({ opacity: 0 }, 1000, function() {
+                    $(this).hide();
+                });
+            }, 5000);
+            mostrar.ocultarSpinner()
+            mostrar.playSound()
+        }
+    })
+}
+
+function verificarDisponibilidadUsuario (username, callback) {
+    mostrar.mostrarSpinner()
+    $.ajax({
+        url: '/ajax_verificar_username',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            'id': idUsuario,
+            'username': username
+        },
+        success: function (response) {
+            var disponible = response.exito
+            mostrar.ocultarSpinner()
+            callback(disponible)
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+            mostrar.ocultarSpinner()
+            mostrar.playSound()
         }
     })
 }
@@ -261,7 +316,7 @@ function actualizarContrasena(id, username){
 function agregarUsuario(nombre_usuario, contraseña, rol){
     mostrar.mostrarSpinner()
     $.ajax({
-        url: 'ajax_agregar_user',
+        url: '/ajax_agregar_user',
         type: 'POST',
         dataType: 'json',
         data: {
@@ -273,9 +328,12 @@ function agregarUsuario(nombre_usuario, contraseña, rol){
             var data = response;
             console.log('data', data);
             mostrar.ocultarSpinner()
+            mostrar.playSound()
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);
+            mostrar.ocultarSpinner()
+            mostrar.playSound()
         }
     })
 }
@@ -283,6 +341,7 @@ function validar(form) {
     var esValido = $('#' + form).valid()
     return esValido
 }
+
 function initFormUpdatePass(form) {
     $.validator.addMethod("regex", function(value, element) {
         return this.optional(element) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
