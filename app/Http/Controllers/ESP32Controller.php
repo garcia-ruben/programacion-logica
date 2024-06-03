@@ -12,7 +12,7 @@ class ESP32Controller
     public function guardarOpcion(Request $request) {
         $request->validate([
             'id' => 'required|integer',
-            'producto_id' => 'required|integer',
+            'opcion' => 'required|integer',
             'tiempo' => 'required|regex:/^([0-5]?[0-9]):([0-5]?[0-9])$/',
             'precio' => 'required|numeric|regex:/^\d{1,6}(\.\d{1,2})?$/',
         ]);
