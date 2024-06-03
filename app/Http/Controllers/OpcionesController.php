@@ -47,8 +47,8 @@ class OpcionesController
     public function guardarOpcion(Request $request) {
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
-            'producto_id' => 'required|integer',
-            'tiempo' => 'required|regex:/^([0-5]?[0-9]):([0-5]?[0-9])$/',
+            'producto' => 'required||string|max:5',
+            'tiempo' => 'required|regex:/^([0-9]{2}):([0-5]?[0-9]):([0-5]?[0-9])$/',
             'precio' => 'required|numeric|regex:/^\d{1,6}(\.\d{1,2})?$/',
         ]);
 
@@ -60,12 +60,12 @@ class OpcionesController
         }
 
         $option = Opcion::find($request->input('id'));
-        $option->producto_id = $request->input('producto_id');
+        $option->opcion = $request->input('producto');
 
         // Convertir el tiempo de mm:ss a HH:MM:SS para MySQL
         $tiempo = $request->input('tiempo');
-        list($minutos, $segundos) = explode(':', $tiempo);
-        $tiempo_mysql = sprintf('00:%02d:%02d', $minutos, $segundos);
+        list($horas, $minutos, $segundos) = explode(':', $tiempo);
+        $tiempo_mysql = sprintf('00:%02d:%02d', $horas, $minutos, $segundos);
         $option->tiempo = $tiempo_mysql;
 
         $option->precio = $request->input('precio');

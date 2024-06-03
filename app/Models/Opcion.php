@@ -12,6 +12,7 @@ class Opcion extends Model
     protected $fillable = [
         'tiempo',
         'precio',
+        'producto',
         'producto_id'
     ];
 

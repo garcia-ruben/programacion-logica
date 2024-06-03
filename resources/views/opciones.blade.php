@@ -38,7 +38,7 @@
                                         </div>
                                         <div class="col-sm-12 col-lg-4">
                                             <div class="input-group align-items-center">
-                                                <select id="option-1-name" class="form-select texto-mediano cjs-select" disabled></select>
+                                                <input id="option-1-name" class="form-control texto-mediano cjs-select" disabled></input>
                                                 <button class="cjs-view input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">edit</span></button>
                                             </div>
                                         </div>
@@ -68,7 +68,7 @@
                                         </div>
                                         <div class="col-sm-12 col-lg-4">
                                             <div class="input-group align-items-center">
-                                                <select id="option-2-name" class="form-select rounded texto-mediano cjs-select" disabled></select>
+                                                <input id="option-2-name" class="form-control rounded texto-mediano cjs-select" disabled></input>
                                                 <button class="cjs-view input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">edit</span></button>
                                             </div>
                                         </div>
@@ -95,7 +95,7 @@
                                         </div>
                                         <div class="col-sm-12 col-lg-4">
                                             <div class="input-group align-items-center">
-                                                <select id="option-3-name" class="form-select rounded texto-mediano cjs-select" disabled></select>
+                                                <input id="option-3-name" class="form-control rounded texto-mediano cjs-select" disabled></input>
                                                 <button class="cjs-view input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">edit</span></button>
                                             </div>
                                         </div>
@@ -122,7 +122,7 @@
                                         </div>
                                         <div class="col-sm-12 col-lg-4">
                                             <div class="input-group align-items-center">
-                                                <select id="option-4-name" class="form-select rounded texto-mediano cjs-select" disabled></select>
+                                                <input id="option-4-name" class="form-control rounded texto-mediano cjs-select" disabled></input>
                                                 <button class="cjs-view input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">edit</span></button>
                                             </div>
                                         </div>
@@ -149,7 +149,7 @@
                                         </div>
                                         <div class="col-sm-12 col-lg-4">
                                             <div class="input-group align-items-center">
-                                                <select id="option-5-name" class="form-select rounded texto-mediano cjs-select" disabled></select>
+                                                <input id="option-5-name" class="form-control rounded texto-mediano cjs-select" disabled></input>
                                                 <button class="cjs-view input-group-text btn" style="color: var(--color-primario)"><span class="material-symbols-outlined">edit</span></button>
                                             </div>
                                         </div>

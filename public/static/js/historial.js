@@ -54,20 +54,33 @@ function obtenerHistorial(){
             var datos = response;
             var productos = datos.producto
             var data = datos.data
+            let conteoOpciones = {};
+            data.forEach(objeto => {
+                let opcion = objeto.opcion;
+
+                if (conteoOpciones[opcion]) {
+                    conteoOpciones[opcion]++;
+                } else {
+
+                    conteoOpciones[opcion] = 1;
+                }
+            });
+            console.log(conteoOpciones)
             if (datos.exito) {
-                generarGraficas(productos);
+                generarGraficas(conteoOpciones);
                 let tbody = $("#table tbody");
                 tbody.empty();
                 $.each(data, function(index, item) {
                     let row = $("<tr>");
                     $("<td>").text('000' + item.id).appendTo(row);
                     $("<td>").addClass('text-end').text(item.fecha).appendTo(row);
-                    let productoEncontrado = productos.find(producto => producto.id === item.producto_id);
-                    if (productoEncontrado) {
-                        $("<td>").addClass('text-center').text(productoEncontrado.producto).appendTo(row);
-                    } else {
-                        $("<td>").addClass('text-center').text("Producto no encontrado").appendTo(row);
-                    }
+                    //let productoEncontrado = productos.find(producto => producto.id === item.producto_id);
+                    //if (productoEncontrado) {
+                    //    $("<td>").addClass('text-center').text(productoEncontrado.producto).appendTo(row);
+                    //} else {
+                    //    $("<td>").addClass('text-center').text("Producto no encontrado").appendTo(row);
+                    //}
+                    $("<td>").addClass('text-center').text(item.opcion).appendTo(row);
                     $("<td>").addClass('text-center').text('Opción ' + item.opcion_id).appendTo(row);
                     $("<td>").addClass('text-end').text('$' + item.precio_actual).appendTo(row);
                     row.appendTo(tbody);
@@ -83,14 +96,14 @@ function obtenerHistorial(){
     })
 }
 
-function generarGraficas(productos) {
+function generarGraficas(conteoProductos) {
     mostrar.mostrarSpinner()
-    console.log(productos);
-    var conteoProductos = {};
-    productos.forEach(function (producto) {
-        conteoProductos[producto.producto] = (conteoProductos[producto.producto] || 0) + 1;
-    });
-    console.log("Conteo de productos:", conteoProductos);
+    console.log(conteoProductos);
+    //var conteoProductos = {};
+    //productos.forEach(function (producto) {
+    //    conteoProductos[producto.producto] = (conteoProductos[producto.producto] || 0) + 1;
+    //});
+    //console.log("Conteo de productos:", conteoProductos);
     var index = Object.keys(conteoProductos);
     var values = Object.values(conteoProductos);
     // Gráfico de barras

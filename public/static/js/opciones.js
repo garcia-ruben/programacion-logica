@@ -8,7 +8,7 @@ $(document).ready(function () {
             'X-CSRF-TOKEN': token
         }
     });
-    $('select.cjs-select, button.con-borde').prop('disabled', true)
+    $('input.cjs-select, button.con-borde').prop('disabled', true)
 
     $('.cjs-time').click(function () {
         mostrarTiempo(this)
@@ -35,7 +35,7 @@ $(document).ready(function () {
                    $("<option>").val(prod.id).text(prod.producto).appendTo(selectProducto);
                 });
 
-                selectProducto.val(productoEncontrado.id);
+                selectProducto.val(item.opcion);
                 precioProducto.val(item.precio);
                 tiempoProdcuto.val(item.tiempo);
                 dataIdForTime.data('id', item.id).click(function () {
@@ -61,7 +61,7 @@ $(document).ready(function () {
     $('.cjs-pause').on('click', pausarCronometro).attr('disabled', true);
     $('.cjs-stop').on('click', detenerCronometro).attr('disabled', true);
     $('.cjs-savetime').attr('disabled', true);
-    $('input[id^="option-"][id$="-price"], select[id^="option-"][id$="-name"]').on('change', function() {
+    $('input[id^="option-"][id$="-price"], input[id^="option-"][id$="-name"]').on('change', function() {
         habilitarBoton(this);
     });
 
@@ -70,14 +70,24 @@ $(document).ready(function () {
         $('.btn.con-borde').addClass('btn-sm mt-1 mb-1').css('width', '100%').text('Guardar cambios');
     }
     $('.cjs-view').on('click', function() {
-        var input = $(this).closest('.input-group').find('select');
+        var input = $(this).closest('.input-group').find('input');
         input.prop('disabled', false);
     });
 });
 
 function habilitarBoton(input) {
-    let guardarButton = $(input).closest('.row').find('.con-borde');
-    guardarButton.prop('disabled', $(input).val().trim() === '');
+    var $nameInput = $('input[id^="option-"][id$="-name"]');
+    var nameValue = $nameInput.val();
+
+    if (nameValue.length > 0 && nameValue.length < 6) {
+        console.log("Nombre válido: " + nameValue);
+        let guardarButton = $(input).closest('.row').find('.con-borde');
+        guardarButton.prop('disabled', $(input).val().trim() === '');
+    } else {
+        console.log("Nombre inválido: " + nameValue);
+        let guardarButton = $(input).closest('.row').find('.con-borde');
+        guardarButton.prop('disabled', true);
+    }
 }
 
 function mostrarTiempo(boton) {
@@ -173,8 +183,9 @@ function actualizarCronometro() {
 }
 
 function actualizarOpcion(id) {
-    var producto = $('#option-' + id + '-name').val()
+    var producto = $('#option-' + id + '-name').val().toUpperCase()
     var tiempo = $('#option-' + id + '-time-value').val()
+    console.log((tiempo))
     var precio = $('#option-' + id + '-price').val()
     mostrar.mostrarSpinner()
     $.ajax({
@@ -183,7 +194,7 @@ function actualizarOpcion(id) {
         dataType: 'json',
         data: {
             'id': id,
-            'producto_id': producto,
+            'producto': producto,
             'tiempo': tiempo,
             'precio': precio
         },
