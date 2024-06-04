@@ -12,7 +12,7 @@ class ESP32Controller
     public function guardarOpcion(Request $request) {
         $request->validate([
             'id' => 'required|integer',
-            'opcion' => 'required|integer',
+            'producto' => 'required||string|max:5',
             'tiempo' => 'required|regex:/^([0-5]?[0-9]):([0-5]?[0-9])$/',
             'precio' => 'required|numeric|regex:/^\d{1,6}(\.\d{1,2})?$/',
         ]);
@@ -80,5 +80,11 @@ class ESP32Controller
                 'mensaje' => 'Error al registrar venta: ' . $e->getMessage()
             ]);
         }
+    }
+
+    public function getToken()
+    {
+        $token = csrf_token();
+        return response()->json(['csrf_token' => $token]);
     }
 }

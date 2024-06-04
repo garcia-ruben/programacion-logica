@@ -48,6 +48,7 @@ Route::post('/ajax_restablecer_usuario', [AuthController::class, 'retablecerCont
 Route::post('/ajax_verificar_username', [\App\Http\Controllers\UsuarioController::class, 'verificarUsername'])->name('verify-username');
 
 // CONTROLLERS PARA EL ESP32 SIN CSFR
-Route::get('/api_upd_option_esp32', [\App\Http\Controllers\ESP32Controller::class, 'guardarOpcion'])->name('actualizar-opciones');
+Route::post('/api_upd_option_esp32', [\App\Http\Controllers\ESP32Controller::class, 'guardarOpcion']);
 Route::get('/api_data_option_esp32', [\App\Http\Controllers\ESP32Controller::class, 'obtenerDatosOpciones']);
-Route::get('/api_crea_consumo_esp32', [\App\Http\Controllers\ESP32Controller::class, 'registraConsumo']);
+Route::post('/api_crea_consumo_esp32', [\App\Http\Controllers\ESP32Controller::class, 'registraConsumo']);
+Route::get('/csrf_token', [\App\Http\Controllers\ESP32Controller::class, 'getToken']);
