@@ -34,7 +34,7 @@ class ESP32Controller
         #$tiempo_mysql = sprintf('00:%02d:%02d', $horas, $minutos, $segundos);
         #$option->tiempo = $tiempo_mysql;
 
-        $option->precio = $request->input($precio);
+        $option->precio = $precio;
 
         try {
             $option->save();
