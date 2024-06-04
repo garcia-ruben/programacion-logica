@@ -13,10 +13,11 @@ class ESP32Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
             'producto' => 'required||string|max:5',
-            'tiempo' => 'required|regex:/^([0-9]{2}):([0-5]?[0-9]):([0-5]?[0-9])$/',
-            'precio' => 'required|numeric|regex:/^\d{1,6}(\.\d{1,2})?$/',
+            #'tiempo' => 'required|regex:/^([0-9]{2}):([0-5]?[0-9]):([0-5]?[0-9])$/',
+            'precio' => 'required|integer',
         ]);
-
+        $precio_string = strval($request->input('precio'));
+        $precio = number_format($precio_string, 2, '.', '');
         if ($validator->fails()) {
             return response()->json([
                 'exito' => false,
@@ -28,12 +29,12 @@ class ESP32Controller
         $option->opcion = $request->input('producto');
 
         // Convertir el tiempo de mm:ss a HH:MM:SS para MySQL
-        $tiempo = $request->input('tiempo');
-        list($horas, $minutos, $segundos) = explode(':', $tiempo);
-        $tiempo_mysql = sprintf('00:%02d:%02d', $horas, $minutos, $segundos);
-        $option->tiempo = $tiempo_mysql;
+        #$tiempo = $request->input('tiempo');
+        #list($horas, $minutos, $segundos) = explode(':', $tiempo);
+        #$tiempo_mysql = sprintf('00:%02d:%02d', $horas, $minutos, $segundos);
+        #$option->tiempo = $tiempo_mysql;
 
-        $option->precio = $request->input('precio');
+        $option->precio = $request->input($precio);
 
         try {
             $option->save();
