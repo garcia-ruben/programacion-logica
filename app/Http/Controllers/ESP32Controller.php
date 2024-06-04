@@ -18,6 +18,7 @@ class ESP32Controller
         ]);
         $precio_string = strval($request->input('precio'));
         $precio = number_format($precio_string, 2, '.', '');
+
         if ($validator->fails()) {
             return response()->json([
                 'exito' => false,
@@ -65,12 +66,18 @@ class ESP32Controller
 
     public function registraConsumo(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'opcion_id' => 'required|integer',
             'precio' => 'required|numeric',
             'opcion' => 'required||string|max:5'
         ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'exito' => false,
+                'error' => $validator->errors()->all()
+            ], 200);
+        }
         try {
             $venta = new Venta();
             $venta->opcion_id = $request->opcion_id;
