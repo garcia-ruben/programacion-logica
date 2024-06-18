@@ -9,11 +9,9 @@ use Illuminate\Support\Facades\Validator;
 
 class ESP32Controller
 {
-    public function guardarOpcion(Request $request) {
+    public function actualizaPrecio(Request $request) {
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
-            'producto' => 'required||string|max:5',
-            #'tiempo' => 'required|regex:/^([0-9]{2}):([0-5]?[0-9]):([0-5]?[0-9])$/',
             'precio' => 'required|integer',
         ]);
         $precio_string = strval($request->input('precio'));
@@ -28,14 +26,43 @@ class ESP32Controller
 
         $option = Opcion::find($request->input('id'));
         $option->opcion = $request->input('producto');
-
-        // Convertir el tiempo de mm:ss a HH:MM:SS para MySQL
-        #$tiempo = $request->input('tiempo');
-        #list($horas, $minutos, $segundos) = explode(':', $tiempo);
-        #$tiempo_mysql = sprintf('00:%02d:%02d', $horas, $minutos, $segundos);
-        #$option->tiempo = $tiempo_mysql;
-
         $option->precio = $precio;
+
+        try {
+            $option->save();
+            return response()->json([
+                'exito' => true,
+                'id' => $option->id
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'exito' => false,
+                'mensaje' => 'Error al actualizar opción: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function actualizaTiempo(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|integer',
+            'tiempo' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'exito' => false,
+                'error' => $validator->errors()->all()
+            ], 200);
+        }
+        $horas = "00";
+        $minutos = "00";
+        $segundos = $request->input('tiempo');
+        $segundos_format = str_pad($segundos, 2, '0', STR_PAD_LEFT);
+        $tiempo_mysql = sprintf('00:%02d:%02d', $horas, $minutos, $segundos_format);
+
+        $option = Opcion::find($request->input('id'));
+        $option->opcion = $request->input('producto');
+        $option->tiempo = $tiempo_mysql;
 
         try {
             $option->save();
@@ -95,11 +122,5 @@ class ESP32Controller
                 'mensaje' => 'Error al registrar venta: ' . $e->getMessage()
             ]);
         }
-    }
-
-    public function getToken()
-    {
-        $token = csrf_token();
-        return response()->json(['csrf_token' => $token]);
     }
 }

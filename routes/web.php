@@ -51,4 +51,3 @@ Route::post('/ajax_verificar_username', [\App\Http\Controllers\UsuarioController
 Route::get('/api_upd_option_esp32', [\App\Http\Controllers\ESP32Controller::class, 'guardarOpcion']);
 Route::get('/api_data_option_esp32', [\App\Http\Controllers\ESP32Controller::class, 'obtenerDatosOpciones']);
 Route::get('/api_crea_consumo_esp32', [\App\Http\Controllers\ESP32Controller::class, 'registraConsumo']);
-Route::get('/csrf_token', [\App\Http\Controllers\ESP32Controller::class, 'getToken']);
